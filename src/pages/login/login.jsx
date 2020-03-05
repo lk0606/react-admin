@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-// import { render } from 'react-dom'
+import { render } from 'react-dom'
 import { Form, Input, Button, Checkbox } from 'antd'
 
 export default class Login extends React.Component {
@@ -43,3 +43,8 @@ export default class Login extends React.Component {
         )
     }
 }
+
+// render(
+//     <Login/>,
+//     document.getElementById('root')
+// )

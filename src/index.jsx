@@ -8,21 +8,42 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 function RouteWithSubRoutes(route) {
+    console.log(route, 'route')
     return (
         <Route
+            exact
             path={route.path}
-            render={props => (
-                <route.component {...props}/>
-            )}
+            render={props => {
+                console.log(props, 'props')
+                return <route.component {...props}/>
+            }}
         />
     );
 }
 function RouterDemo() {
     return (
         <Router>
+            <ul>
+                <li>
+                    <Link to="/">index</Link>
+                </li>
+                <li>
+                    <Link to="/login">login</Link>
+                </li>
+            </ul>
             <Switch>
-                { routeConfig.map((item, index)=> {
-                    <RouteWithSubRoutes key={index} {...item}/>
+                { routeConfig.map((route, index)=> {
+                    // console.log(route, 'route')
+                    // return <RouteWithSubRoutes key={index} {...route}/>
+                    return <Route
+                        exact
+                        key={index}
+                        path={route.path}
+                        render={props => {
+                            console.log(props, 'props')
+                            return <route.component {...props}/>
+                        }}
+                    />
                 })}
             </Switch>
         </Router>
@@ -30,7 +51,7 @@ function RouterDemo() {
 }
 
 ReactDOM.render(
-    <App/>,
+    <RouterDemo/>,
     document.getElementById('root')
 );
 

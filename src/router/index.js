@@ -4,7 +4,7 @@ import Index from '../App'
 
 export const routeConfig = [
     {
-        path: '/login',
+        path: '/',
         component: Index,
     },
     { path: '/login',
