@@ -1,0 +1,176 @@
+{
+  "code": 200,
+  "info": "登录成功",
+  "data": [
+    {
+      "name": "visitor",
+      "role": "visitor",
+      "permission": {
+        "menu": [
+          {
+            "name": "首页",
+            "path": "/"
+          },
+          {
+            "name": "组件",
+            "path": "components",
+            "children": [
+              {
+                "name": "倒计时",
+                "path": "count-down"
+              },
+              {
+                "name": "下载",
+                "path": "download"
+              },
+              {
+                "name": "表格",
+                "path": "table"
+              },
+              {
+                "name": "播放器",
+                "path": "video-player"
+              }
+            ]
+          },
+          {
+            "name": "权限",
+            "path": "auth",
+            "children": [
+              {
+                "name": "游客权限",
+                "path": "auth-visitor"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "admin",
+      "role": "admin",
+      "permission": {
+        "menu": [
+          {
+            "name": "首页",
+            "path": "/"
+          },
+          {
+            "name": "组件",
+            "path": "components",
+            "children": [
+              {
+                "name": "倒计时",
+                "path": "count-down"
+              },
+              {
+                "name": "下载",
+                "path": "download"
+              },
+              {
+                "name": "表格",
+                "path": "table"
+              },
+              {
+                "name": "播放器",
+                "path": "video-player"
+              }
+            ]
+          },
+          {
+            "name": "权限",
+            "path": "auth",
+            "children": [
+              {
+                "name": "权限配置",
+                "path": "auth-config"
+              },
+              {
+                "name": "游客权限",
+                "path": "auth-visitor"
+              },
+              {
+                "name": "管理权限",
+                "path": "auth-admin"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "superAdmin",
+      "role": "superAdmin",
+      "permission": {
+        "menu": [
+          {
+            "name": "首页",
+            "path": "/"
+          },
+          {
+            "name": "组件",
+            "path": "components",
+            "children": [
+              {
+                "name": "图片压缩",
+                "path": "canvas-compress"
+              },
+              {
+                "name": "倒计时",
+                "path": "count-down"
+              },
+              {
+                "name": "下载",
+                "path": "download"
+              },
+              {
+                "name": "表格",
+                "path": "table"
+              },
+              {
+                "name": "播放器",
+                "path": "video-player"
+              }
+            ]
+          },
+          {
+            "name": "权限",
+            "path": "auth",
+            "children": [
+              {
+                "name": "权限配置",
+                "path": "auth-config"
+              },
+              {
+                "name": "游客权限",
+                "path": "auth-visitor"
+              },
+              {
+                "name": "管理权限",
+                "path": "auth-admin"
+              },
+              {
+                "name": "超管权限",
+                "path": "auth-super-admin"
+              }
+            ]
+          },
+          {
+            "name": "测试",
+            "path": "test",
+            "children": [
+              {
+                "name": "test1",
+                "path": "test1"
+              },
+              {
+                "name": "tree",
+                "path": "tree"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
