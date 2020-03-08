@@ -1,57 +1,78 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
 // import { Router, Route, useHistory } from 'react-router'
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
-import { routeConfig } from './router'
-import './styles/index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { routeConfig } from './router/index'
+import { modules } from './router/route.config'
+import RouteConfigExample from './router/example'
+import './assets/styles/index.css';
+import store from './store'
 
-function RouteWithSubRoutes(route) {
-    console.log(route, 'route')
-    return (
-        <Route
-            exact
-            path={route.path}
-            render={props => {
-                console.log(props, 'props')
-                return <route.component {...props}/>
-            }}
+
+import * as serviceWorker from './serviceWorker';
+// console.log(Switch, 'Switch')
+
+function SubRoute(routes) {
+
+    return routes.map(item=> {
+        // if(item.children && Array.isArray(item.children)) {
+        //     return <Route
+        //         key={item.path}
+        //         exact={item.path === '/'}
+        //         path={item.path}
+        //         component={item.component}
+        //     >{
+        //         SubRoute(item.children)
+        //     }</Route>
+        // }
+        return <Route
+            key={item.path}
+            exact={item.path === '/'}
+            path={item.path}
+            component={item.component}
         />
-    );
+    })
 }
-function RouterDemo() {
-    return (
-        <Router>
-            <ul>
-                <li>
-                    <Link to="/">index</Link>
-                </li>
-                <li>
-                    <Link to="/login">login</Link>
-                </li>
-            </ul>
-            <Switch>
-                { routeConfig.map((route, index)=> {
-                    // console.log(route, 'route')
-                    // return <RouteWithSubRoutes key={index} {...route}/>
-                    return <Route
-                        exact
-                        key={index}
-                        path={route.path}
-                        render={props => {
-                            console.log(props, 'props')
-                            return <route.component {...props}/>
-                        }}
-                    />
-                })}
-            </Switch>
-        </Router>
-    )
+
+function RouterIndex() {
+    return <Router>
+        { SubRoute(routeConfig) }
+    </Router>
 }
 
 ReactDOM.render(
-    <RouterDemo/>,
+    <Provider store={store}>
+        <Router
+        >
+            {
+                routeConfig.map((route,key)=>{
+
+                    if(route.exact){
+
+                        return <Route
+                            key={key}
+                            exact
+                            path={route.path}
+                            render={props => (
+                                <route.component {...props} routes={route.children} />
+                            )}
+
+                        />
+                    }else{
+                        return <Route
+                            key={key}
+                            path={route.path}
+                            render={props => (
+                                <route.component {...props} routes={route.children} />
+                            )}
+                        />
+
+                    }
+                })
+            }
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );
 
