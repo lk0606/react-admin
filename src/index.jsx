@@ -2,25 +2,50 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import { Router, Route, useHistory } from 'react-router'
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
-import { routeConfig } from './router'
+import { routeConfig } from './router/index'
+import { modules } from './router/route.config'
+import RouteConfigExample from './router/example'
 import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// console.log(Switch, 'Switch')
 
 function RouteWithSubRoutes(route) {
-    console.log(route, 'route')
     return (
         <Route
             exact
             path={route.path}
-            render={props => {
-                console.log(props, 'props')
-                return <route.component {...props}/>
-            }}
+            component={route.component}
         />
     );
 }
 function RouterDemo() {
+    const split = <Switch>
+        {
+            routeConfig.map((route, index)=> {
+                return <RouteWithSubRoutes key={index} {...route}/>
+                return <Route
+                    exact
+                    key={index}
+                    path={route.path}
+                    component={route.component}
+                />})
+        }
+    </Switch>
+    const normal = <Switch>
+        {
+            routeConfig.map((route, index)=> {
+                return <Route
+                    exact
+                    key={index}
+                    path={route.path}
+                    component={route.component}
+                />})
+        }
+    </Switch>
+
+    console.log(split, normal, 'split, normal')
+
     return (
         <Router>
             <ul>
@@ -31,21 +56,7 @@ function RouterDemo() {
                     <Link to="/login">login</Link>
                 </li>
             </ul>
-            <Switch>
-                { routeConfig.map((route, index)=> {
-                    // console.log(route, 'route')
-                    // return <RouteWithSubRoutes key={index} {...route}/>
-                    return <Route
-                        exact
-                        key={index}
-                        path={route.path}
-                        render={props => {
-                            console.log(props, 'props')
-                            return <route.component {...props}/>
-                        }}
-                    />
-                })}
-            </Switch>
+            {normal}
         </Router>
     )
 }
