@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { routeConfig } from './router/index'
 import { modules } from './router/route.config'
 import RouteConfigExample from './router/example'
-import './styles/index.css';
-import App from './App';
+import './assets/styles/index.css';
+import App from './test/App';
 import * as serviceWorker from './serviceWorker';
 // console.log(Switch, 'Switch')
 
@@ -40,22 +40,15 @@ function RouterDemo() {
                     key={index}
                     path={route.path}
                     component={route.component}
+                    routes={route.children}
                 />})
         }
     </Switch>
 
-    console.log(split, normal, 'split, normal')
+    // console.log(split, normal, 'split, normal')
 
     return (
         <Router>
-            <ul>
-                <li>
-                    <Link to="/">index</Link>
-                </li>
-                <li>
-                    <Link to="/login">login</Link>
-                </li>
-            </ul>
             {normal}
         </Router>
     )

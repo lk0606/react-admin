@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from '../assets/svg/logo.svg';
 import './App.less';
-import './styles/test.less'
 
 // custom
 import { Button } from 'antd'

@@ -1,7 +1,7 @@
 
 
 import Login from '../pages/login/login'
-import Index from '../App'
+import Index from '../test/App'
 import React from "react";
 import {
     BrowserRouter as Router,
