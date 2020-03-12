@@ -1,7 +1,7 @@
 
 import './layout.less'
 import React, {lazy} from 'react'
-
+import { Route, Switch as RouteSwitch, Link, useRouteMatch, useHistory, HashRouter } from "react-router-dom"
 import { Layout as CLayout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
 import {
     MenuUnfoldOutlined,
@@ -27,8 +27,16 @@ const menu = (
         </Menu.Item>
     </Menu>
 );
+function ChildCom(props) {
+    return <p>{props.child}</p>
+}
 
 export default class Layout extends React.Component {
+    constructor(props) {
+        super(props)
+        console.log(props, 'props')
+    }
+
     state = {
         collapsed: false,
         theme: 'dark',
@@ -77,11 +85,18 @@ export default class Layout extends React.Component {
     componentDidMount() {
         this.renderDom()
     }
+    pushView(route) {
+        console.log(route, this, 'pushView')
+        this.props.history.push(route.path)
+    }
 
     render() {
         const _this = this
         function dom(type) {
-            return <div>{type}</div>
+            return <div>
+                <p>state: {type}</p>
+                <ChildCom child={"child:" + type}/>
+            </div>
         }
 
         function test() {
@@ -93,26 +108,34 @@ export default class Layout extends React.Component {
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo">
                     </div>
-                    {/*<Switch*/}
-                        {/*checked={this.state.theme === 'dark'}*/}
-                        {/*onChange={this.changeTheme}*/}
-                        {/*checkedChildren="Dark"*/}
-                        {/*unCheckedChildren="Light"*/}
-                    {/*/>*/}
+                    <Switch
+                        checked={this.state.theme === 'dark'}
+                        onChange={this.changeTheme}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                    />
+
                     <Menu
-                        theme={this.state.theme} mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1">
-                            <UserOutlined />
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <VideoCameraOutlined />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <UploadOutlined />
-                            <span>nav 3</span>
-                        </Menu.Item>
+                        theme={this.state.theme} mode="inline" defaultSelectedKeys={'0'}>
+                        {
+                            this.props.routes.map((item, index)=> {
+                                return <Menu.Item
+                                    onClick={this.pushView.bind(this, item)}
+                                    key={index}>
+                                    <UserOutlined />
+                                    <span>{item.meta.name}</span>
+                                </Menu.Item>
+                            })
+                            // this.props.routes.map((item, index)=> {
+                            //     return <Menu.Item
+                            //         key={index}>
+                            //         <Link to={item.path}>
+                            //             <UserOutlined />
+                            //             <span>{item.meta.name}</span>
+                            //         </Link>
+                            //     </Menu.Item>
+                            // })
+                        }
                     </Menu>
                 </Sider>
                 <CLayout className="site-layout">
@@ -139,6 +162,12 @@ export default class Layout extends React.Component {
                         }}
                     >
                         {
+                            this.props.routes.map((item,index)=>{
+                                return <Route key={index} exact path={item.path} component={item.component}/>
+                            })
+                        }
+                        {
+
                             test()
                         }
                     </Content>

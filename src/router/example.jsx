@@ -21,11 +21,11 @@ import {
 const routes = [
     {
         path: "/",
-        component: Index
+        component: Sandwiches
     },
     {
         path: "/login",
-        component: Login,
+        component: Tacos,
         routes: [
             {
                 path: "/tacos/bus",
@@ -54,7 +54,7 @@ export default function RouteConfigExample() {
 
                 <Switch>
                     {routes.map((route, i) => (
-                        <RouteWithSubRoutes key={i} {...route} />
+                        <RouteWithSubRoutes  key={i} {...route} />
                     ))}
                 </Switch>
             </div>
@@ -68,7 +68,6 @@ export default function RouteConfigExample() {
 function RouteWithSubRoutes(route) {
     return (
         <Route
-            exact
             path={route.path}
             render={props => (
                 // pass the sub-routes down to keep nesting
