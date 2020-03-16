@@ -159,17 +159,7 @@ export default class Layout extends React.Component {
                         {
                             this.props.children.map(item=>{
                                 console.log(item, 'layout item')
-                                return <MainContent key={item.path} {...item}/>
-
-                                return <Route
-                                    key={item.path}
-                                    exact={item.exact}
-                                    path={item.path}
-                                    render={props => {
-                                        return <item.component {...props} children={item.children} />
-                                    }}
-                                />
-                                return <Route key={item.path} exact path={item.path} component={item.component}/>
+                                return AllRoute(item)
                             })
                         }
 
@@ -188,4 +178,23 @@ export default class Layout extends React.Component {
     }
 }
 
-// ReactDOM.render(<SiderDemo />, mountNode);
+function AllRoute(props) {
+    console.log(props, 'AllRoute')
+    if(!props) {
+        return
+    }
+    if(props.hasOwnProperty('children')) {
+        return props.children.map(item=> {
+            return AllRoute(item)
+        })
+    } else {
+        return <Route
+            key={props.path}
+            exact={props.exact}
+            path={props.path}
+            render={childProp => {
+                return <props.component {...childProp} />
+            }}
+        />
+    }
+}

@@ -1,10 +1,5 @@
 
 import React from 'react'
-import { Route, Switch as RouteSwitch, Link, useRouteMatch, useHistory, HashRouter } from "react-router-dom"
-import { Layout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
-// const { Header, Sider, Content } = CLayout
-
-import MainContent from '../components/layout/content'
 
 export const routeConfig = [
     {
@@ -29,38 +24,38 @@ export const routeConfig = [
                 children: [
                     {
                         path: '/nav1',
-                        component: ()=> <div>nav1</div>,
+                        component: ()=> <div>商品列表1</div>,
                         meta: {
                             name: '商品列表1',
                             icon: ''
                         },
-                        // children: [
-                        //     {
-                        //         path: '/nav11',
-                        //         component: ()=> <div>nav11</div>,
-                        //         meta: {
-                        //             name: '商品列表11',
-                        //             icon: ''
-                        //         },
-                        //     },
-                        //     {
-                        //         path: '/nav12',
-                        //         component: ()=> <div>nav12</div>,
-                        //         meta: {
-                        //             name: '商品列表12',
-                        //             icon: ''
-                        //         },
-                        //     },
-                        // ]
+                        children: [
+                            {
+                                path: '/nav11',
+                                component: ()=> <div>商品列表11</div>,
+                                meta: {
+                                    name: '商品列表11',
+                                    icon: ''
+                                },
+                            },
+                            {
+                                path: '/nav12',
+                                component: ()=> <div>商品列表12</div>,
+                                meta: {
+                                    name: '商品列表12',
+                                    icon: ''
+                                },
+                            },
+                        ]
                     },
-                    // {
-                    //     path: '/nav2',
-                    //     component: ()=> <div>nav2</div>,
-                    //     meta: {
-                    //         name: '商品列表2',
-                    //         icon: ''
-                    //     },
-                    // },
+                    {
+                        path: '/nav2',
+                        component: ()=> <div>商品列表2</div>,
+                        meta: {
+                            name: '商品列表2',
+                            icon: ''
+                        },
+                    },
                 ]
             },
             {
@@ -74,34 +69,3 @@ export const routeConfig = [
         ]
     }
 ]
-
-function SubMenu(props) {
-    if(props.children) {
-        return <div>
-            <p>goods</p>
-            {
-                props.children.map(item=> {
-                    return <Route
-                        exact
-                        key={item.path}
-                        path={item.path}
-                        render={(props)=>(
-                            <item.component {...props} children={item.children}/>
-                        )}
-                    />
-                })
-            }
-        </div>
-    }
-    return <div>
-        <p>goods</p>
-        {
-            <Route
-                exact
-                key={props.path}
-                path={props.path}
-                component={props.component}
-            />
-        }
-    </div>
-}
