@@ -4,6 +4,7 @@ import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import {connect} from 'react-redux'
 import {addTodo, login} from '../../store/actions'
+import * as api from '../../api'
 
 const layout = {
     labelCol: {
@@ -21,12 +22,15 @@ const tailLayout = {
 };
 
 function Login(props) {
-    console.log('login props:', props)
+    // console.log('login props:', props)
     const onFinish = values => {
         console.log('Success:', values);
         if(values.username && values.password) {
-            props.login(values)
-            // window.location.href = '/'
+            props.addTodo()
+            props.login(values).then(res=> {
+                console.log(res, 'res')
+                alert(`欢迎：${res.data.username}`)
+            })
         }
     };
 
@@ -41,7 +45,7 @@ function Login(props) {
                 name="basic"
                 initialValues={{
                     username: 'admin',
-                    password: '1234',
+                    password: '123',
                     remember: true,
                 }}
                 onFinish={onFinish}
@@ -93,6 +97,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     login: ({username, password})=> dispatch(login({username, password})),
+    addTodo: ()=> dispatch(addTodo('Learn about actions'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

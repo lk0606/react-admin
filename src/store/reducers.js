@@ -1,6 +1,9 @@
 
 import { combineReducers } from 'redux'
 import {
+    ApiRequest,
+    ApiSuccess,
+    ApiError,
     ADD_TODO,
     TOGGLE_TODO,
     SET_VISIBILITY_FILTER,
@@ -47,22 +50,39 @@ const initUser = {
     password: ''
 }
 
-export function login(state = initUser, action) {
-    console.log(state, action, 'reduces login')
+// export function login(state = initUser, action) {
+//     console.log(state, action, 'reduces login')
+//     switch (action.type) {
+//         case 'login':
+//             return {
+//                 // ...state,
+//                 ...action.user
+//             }
+//         default: return state
+//     }
+// }
+
+export function userInfo(state = {}, action) {
+    console.log(state, action, 'login reducer')
     switch (action.type) {
-        case 'login':
+        case ApiRequest:
+            return state
+        case ApiSuccess:
+        case ApiError:
             return {
-                // ...state,
-                ...action.user
+                ...state,
+                userInfo: action.data
             }
         default: return state
     }
 }
 
+
 const todoApp = combineReducers({
-    visibilityFilter,
+    // visibilityFilter,
     todo,
-    login
+    // login,
+    userInfo
 })
 
 export default todoApp

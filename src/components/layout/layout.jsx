@@ -24,7 +24,7 @@ const menu = (
             <span>噗呲</span>
         </Menu.Item>
         <Menu.Item>
-            <a href="/login">注销</a>
+            <Link to="/login">注销</Link>
             {/*<span></span>*/}
         </Menu.Item>
     </Menu>
@@ -107,16 +107,6 @@ export default class Layout extends React.Component {
             return dom(_this.state.dom)
         }
 
-        const RouterItem = (children)=> {
-            console.log(children, 'RouterItem')
-            return children.map((item,index)=>{
-                if(children.hasOwnProperty('children')) {
-                    RouterItem(children.children)
-                }
-                return <Route key={index} exact path={item.path} component={item.component}/>
-            })
-        }
-
         return (
             <CLayout className="layout-container">
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -162,10 +152,6 @@ export default class Layout extends React.Component {
                                 return AllRoute(item)
                             })
                         }
-
-                        {/*{*/}
-                            {/*RouterItem(this.props.children)*/}
-                        {/*}*/}
 
                         {
 

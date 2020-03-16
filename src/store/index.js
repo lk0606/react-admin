@@ -1,22 +1,23 @@
 
-
-import {
-    addTodo,
-    toggleTodo,
-    setVisibilityFilter,
-    VisibilityFilters
-} from './actions'
-
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import todoApp from './reducers'
+import reduxLogger from 'redux-logger'
 
-let store = createStore(todoApp)
+let store = createStore(
+    todoApp,
+    {},
+    applyMiddleware(
+        thunk,
+        // reduxLogger
+    )
+)
 // 打印初始状态
 console.log(store.getState(), 'init state')
 
 // 每次 state 更新时，打印日志
 // 注意 subscribe() 返回一个函数用来注销监听器
-const unsubscribe = store.subscribe((t) => console.log( store.getState(), t, '' ))
+const unsubscribe = store.subscribe(() => console.log( store.getState(), 'store.subscribe' ))
 
 // 发起一系列 action
 // store.dispatch(addTodo('Learn about actions'))
