@@ -13,32 +13,67 @@ import store from './store'
 import * as serviceWorker from './serviceWorker';
 // console.log(Switch, 'Switch')
 
-function SubRoute(routes) {
+function descRouter(routes) {
+    return routes.map(route => {
+        if (route.children) {
+            return (
+                <Route key={route.path} component={route.component} path={route.path}>
+                    {descRouter(route.children)}
+                </Route>
+            );
+        } else {
+            return (<Route key={route.path} component={route.component} path={route.path}/>);
+        }
+    })
+}
+console.log(descRouter(routeConfig))
 
-    return routes.map(item=> {
-        // if(item.children && Array.isArray(item.children)) {
-        //     return <Route
-        //         key={item.path}
-        //         exact={item.path === '/'}
-        //         path={item.path}
-        //         component={item.component}
-        //     >{
-        //         SubRoute(item.children)
-        //     }</Route>
-        // }
+function RouteItem(routeConfig) {
+    console.log(routeConfig, ' routeConfig')
+    return routeConfig.map((route, key)=>{
+        console.log(route, 'route')
+        if(route.children) {
+            return <Route
+                key={route.path}
+                exact={route.exact}
+                path={route.path}
+                // component={route.component}
+                render={props => {
+                    return <route.component {...props} children={route.children} />
+                }}
+
+            >
+                {/*{RouteItem(route.children)}*/}
+            </Route>
+        }
         return <Route
-            key={item.path}
-            exact={item.path === '/'}
-            path={item.path}
-            component={item.component}
+            key={route.path}
+            exact={route.exact}
+            path={route.path}
+            // component={route.component}
+            render={props => {
+                return <route.component {...props} children={route.children} />
+            }}
+
         />
+
     })
 }
 
-function RouterIndex() {
-    return <Router>
-        { SubRoute(routeConfig) }
-    </Router>
+export function SubRoute(routes) {
+    console.log(routes, 'SubRoute')
+    return routes.map(item=> {
+        if(item.children) {
+            SubRoute(item.children)
+        }
+        return <Route
+            exact
+            key={item.path}
+            path="/:id"
+        >
+            <item.component children={item.children}/>
+        </Route>
+    })
 }
 
 ReactDOM.render(
@@ -46,6 +81,7 @@ ReactDOM.render(
         <Router
         >
             {
+                // SubRoute(routeConfig)
                 routeConfig.map((route,key)=>{
 
                     if(route.exact){
@@ -55,7 +91,7 @@ ReactDOM.render(
                             exact
                             path={route.path}
                             render={props => (
-                                <route.component {...props} routes={route.children} />
+                                <route.component {...props} children={route.children} />
                             )}
 
                         />
@@ -64,7 +100,7 @@ ReactDOM.render(
                             key={key}
                             path={route.path}
                             render={props => (
-                                <route.component {...props} routes={route.children} />
+                                <route.component {...props} children={route.children} />
                             )}
                         />
 

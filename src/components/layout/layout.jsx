@@ -10,6 +10,8 @@ import {
     VideoCameraOutlined,
     UploadOutlined,
 } from '@ant-design/icons'
+import { Aside } from './aside'
+import MainContent from './content'
 
 const { Header, Sider, Content } = CLayout
 
@@ -34,7 +36,7 @@ function ChildCom(props) {
 export default class Layout extends React.Component {
     constructor(props) {
         super(props)
-        console.log(props, 'props')
+        console.log(props, 'props Layout')
     }
 
     state = {
@@ -83,11 +85,13 @@ export default class Layout extends React.Component {
         }
     }
     componentDidMount() {
-        this.renderDom()
+        this.renderDom().then(res=> {
+            console.log(res, 'res')
+        })
     }
-    pushView(route) {
-        console.log(route, this, 'pushView')
-        this.props.history.push(route.path)
+    pushView(path) {
+        console.log(path, this, 'pushView')
+        this.props.history.push(path)
     }
 
     render() {
@@ -103,6 +107,16 @@ export default class Layout extends React.Component {
             return dom(_this.state.dom)
         }
 
+        const RouterItem = (children)=> {
+            console.log(children, 'RouterItem')
+            return children.map((item,index)=>{
+                if(children.hasOwnProperty('children')) {
+                    RouterItem(children.children)
+                }
+                return <Route key={index} exact path={item.path} component={item.component}/>
+            })
+        }
+
         return (
             <CLayout className="layout-container">
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -114,29 +128,10 @@ export default class Layout extends React.Component {
                         checkedChildren="Dark"
                         unCheckedChildren="Light"
                     />
-
-                    <Menu
-                        theme={this.state.theme} mode="inline" defaultSelectedKeys={'0'}>
-                        {
-                            this.props.routes.map((item, index)=> {
-                                return <Menu.Item
-                                    onClick={this.pushView.bind(this, item)}
-                                    key={index}>
-                                    <UserOutlined />
-                                    <span>{item.meta.name}</span>
-                                </Menu.Item>
-                            })
-                            // this.props.routes.map((item, index)=> {
-                            //     return <Menu.Item
-                            //         key={index}>
-                            //         <Link to={item.path}>
-                            //             <UserOutlined />
-                            //             <span>{item.meta.name}</span>
-                            //         </Link>
-                            //     </Menu.Item>
-                            // })
-                        }
-                    </Menu>
+                    <Aside
+                        onHandleRoute={this.pushView.bind(this)}
+                        theme={this.state.theme}
+                        children={this.props.children}/>
                 </Sider>
                 <CLayout className="site-layout">
                     <Header className="header-wrap" style={{ padding: 0 }}>
@@ -162,10 +157,26 @@ export default class Layout extends React.Component {
                         }}
                     >
                         {
-                            this.props.routes.map((item,index)=>{
-                                return <Route key={index} exact path={item.path} component={item.component}/>
+                            this.props.children.map(item=>{
+                                console.log(item, 'layout item')
+                                return <MainContent key={item.path} {...item}/>
+
+                                return <Route
+                                    key={item.path}
+                                    exact={item.exact}
+                                    path={item.path}
+                                    render={props => {
+                                        return <item.component {...props} children={item.children} />
+                                    }}
+                                />
+                                return <Route key={item.path} exact path={item.path} component={item.component}/>
                             })
                         }
+
+                        {/*{*/}
+                            {/*RouterItem(this.props.children)*/}
+                        {/*}*/}
+
                         {
 
                             test()
