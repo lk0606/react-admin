@@ -1,23 +1,41 @@
 
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, compose } from 'redux'
+import middlewareThunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import todoApp from './reducers'
 import reduxLogger from 'redux-logger'
+import rootSaga, { helloSaga, testLogin } from './sagas'
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const sagaMiddleware = createSagaMiddleware()
 
 let store = createStore(
     todoApp,
     {},
-    applyMiddleware(
-        thunk,
-        // reduxLogger
+    composeEnhancers(
+        applyMiddleware(
+            middlewareThunk,
+            sagaMiddleware,
+            // reduxLogger
+        )
     )
+
 )
 // 打印初始状态
-console.log(store.getState(), 'init state')
+// console.log(store.getState(), 'init state')
+const user = {
+    username: 'admin',
+    password: '123'
+}
+
+// sagaMiddle(testLogin(user).next())
+sagaMiddleware.run(rootSaga)
+// const t = testLogin(user)
+// sagaMiddleware.run(t)
 
 // 每次 state 更新时，打印日志
 // 注意 subscribe() 返回一个函数用来注销监听器
-const unsubscribe = store.subscribe(() => console.log( store.getState(), 'store.subscribe' ))
+// const unsubscribe = store.subscribe(() => console.log( store.getState(), 'store.subscribe' ))
 
 // 发起一系列 action
 // store.dispatch(addTodo('Learn about actions'))
@@ -28,6 +46,6 @@ const unsubscribe = store.subscribe(() => console.log( store.getState(), 'store.
 // store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
 
 // 停止监听 state 更新
-unsubscribe()
+// unsubscribe()
 
 export default store

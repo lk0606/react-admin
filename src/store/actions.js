@@ -1,5 +1,4 @@
 
-
 import * as api from '../api'
 /*
  * action 类型
@@ -38,6 +37,12 @@ export function login(params) {
     }
 }
 
+export function sagaRequest(data) {
+    return {
+        type: 'sagaRequest',
+        data
+    }
+}
 export function apiRequest() {
     return {
         type: ApiRequest

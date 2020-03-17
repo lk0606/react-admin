@@ -69,10 +69,7 @@ export function userInfo(state = {}, action) {
             return state
         case ApiSuccess:
         case ApiError:
-            return {
-                ...state,
-                userInfo: action.data
-            }
+            return action.data
         default: return state
     }
 }
@@ -81,7 +78,6 @@ export function userInfo(state = {}, action) {
 const todoApp = combineReducers({
     // visibilityFilter,
     todo,
-    // login,
     userInfo
 })
 

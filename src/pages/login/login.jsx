@@ -3,8 +3,9 @@
 import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import {connect} from 'react-redux'
-import {addTodo, login} from '../../store/actions'
+import {addTodo, apiRequest, login, sagaRequest} from '../../store/actions'
 import * as api from '../../api'
+import {userInfo} from '../../store/reducers'
 
 const layout = {
     labelCol: {
@@ -22,15 +23,19 @@ const tailLayout = {
 };
 
 function Login(props) {
-    // console.log('login props:', props)
+    console.log('login props:', props)
+
     const onFinish = values => {
         console.log('Success:', values);
         if(values.username && values.password) {
-            props.addTodo()
-            props.login(values).then(res=> {
-                console.log(res, 'res')
-                alert(`欢迎：${res.data.username}`)
-            })
+            props.sagaRequest(values)
+            // props.login(values).then(res=> {
+            //     console.log(res, 'res')
+            //     alert(`欢迎：${res.data.username}`)
+            // })
+            // if(props.userInfo && props.userInfo.userInfo && props.userInfo.userInfo.username) {
+            //     alert(`欢迎：${props.userInfo.userInfo.username}`)
+            // }
         }
     };
 
@@ -97,6 +102,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     login: ({username, password})=> dispatch(login({username, password})),
+    sagaRequest: ({username, password})=> dispatch(sagaRequest({username, password})),
     addTodo: ()=> dispatch(addTodo('Learn about actions'))
 });
 

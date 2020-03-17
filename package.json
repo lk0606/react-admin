@@ -12,10 +12,12 @@
     "c-p:cls": "hygen pages-class-jsx with-prompt",
     "c-c:cls": "hygen components-class-jsx with-prompt"
   },
+  "eslintIgnore": [
+    "src/**"
+  ],
   "eslintConfig": {
     "extends": [
-      "react-app",
-      ".eslintignore"
+      "react-app"
     ],
     "rules": {
       "no-unused-vars": "off"
@@ -50,6 +52,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
+    "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
