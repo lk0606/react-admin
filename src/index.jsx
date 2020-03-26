@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 // import { Router, Route, useHistory } from 'react-router'
@@ -11,77 +11,19 @@ import store from './store'
 
 
 import * as serviceWorker from './serviceWorker';
-// console.log(Switch, 'Switch')
-
-// function descRouter(routes) {
-//     return routes.map(route => {
-//         if (route.children) {
-//             return (
-//                 <Route key={route.path} component={route.component} path={route.path}>
-//                     {descRouter(route.children)}
-//                 </Route>
-//             );
-//         } else {
-//             return (<Route key={route.path} component={route.component} path={route.path}/>);
-//         }
-//     })
-// }
-//
-// function RouteItem(routeConfig) {
-//     console.log(routeConfig, ' routeConfig')
-//     return routeConfig.map((route, key)=>{
-//         console.log(route, 'route')
-//         if(route.children) {
-//             return <Route
-//                 key={route.path}
-//                 exact={route.exact}
-//                 path={route.path}
-//                 // component={route.component}
-//                 render={props => {
-//                     return <route.component {...props} children={route.children} />
-//                 }}
-//
-//             >
-//                 {/*{RouteItem(route.children)}*/}
-//             </Route>
-//         }
-//         return <Route
-//             key={route.path}
-//             exact={route.exact}
-//             path={route.path}
-//             // component={route.component}
-//             render={props => {
-//                 return <route.component {...props} children={route.children} />
-//             }}
-//
-//         />
-//
-//     })
-// }
-//
-// export function SubRoute(routes) {
-//     console.log(routes, 'SubRoute')
-//     return routes.map(item=> {
-//         if(item.children) {
-//             SubRoute(item.children)
-//         }
-//         return <Route
-//             exact
-//             key={item.path}
-//             path="/:id"
-//         >
-//             <item.component children={item.children}/>
-//         </Route>
-//     })
-// }
+// console.log(Router, 'Router')
 
 ReactDOM.render(
     <Provider store={store}>
         <Router
+            getUserConfirmation={
+                (msg, cb)=> {
+                    console.log(msg, cb, 'getUserConfirmation')
+                }
+            }
         >
             <Switch>
                 {
-                    // SubRoute(routeConfig)
                     routeConfig.map((route,key)=>{
                         return <Route
                             key={key}

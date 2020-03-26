@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons'
 import { Aside } from './aside'
 import MainContent from './content'
+import CInput from '../c-input/c-input'
 
 const { Header, Sider, Content } = CLayout
 
@@ -36,25 +37,26 @@ function ChildCom(props) {
 export default class Layout extends React.Component {
     constructor(props) {
         super(props)
-        console.log(props, 'props Layout')
+        // console.log(props, 'props Layout')
     }
 
     state = {
         collapsed: false,
         theme: 'dark',
         current: '1',
-        dom: null
+        dom: null,
+        input: '',
     };
 
     changeTheme = value => {
-        console.log(value, 'changeTheme')
+        // console.log(value, 'changeTheme')
         this.setState({
             theme: value ? 'dark' : 'light',
         });
     };
 
     handleClick = e => {
-        console.log('click ', e);
+        // console.log('click ', e);
         this.setState({
             current: e.key,
         })
@@ -85,6 +87,7 @@ export default class Layout extends React.Component {
         }
     }
     componentDidMount() {
+        console.log(this, 'this')
         this.renderDom().then(res=> {
             console.log(res, 'res')
         })
@@ -92,6 +95,12 @@ export default class Layout extends React.Component {
     pushView(path) {
         console.log(path, this, 'pushView')
         this.props.history.push(path)
+    }
+    handleInput = (data)=> {
+        console.log(data, 'handleInput parent')
+        this.setState({
+            input: data
+        })
     }
 
     render() {
@@ -148,7 +157,7 @@ export default class Layout extends React.Component {
                     >
                         {
                             this.props.children.map(item=>{
-                                console.log(item, 'layout item')
+                                // console.log(item, 'layout item')
                                 return AllRoute(item)
                             })
                         }
@@ -157,6 +166,12 @@ export default class Layout extends React.Component {
 
                             test()
                         }
+                        <CInput
+                            myInput={this.handleInput}
+                            input={this.state.input}
+                            test="11"
+                            maxLength={10}
+                        />
                     </Content>
                 </CLayout>
             </CLayout>
@@ -165,7 +180,7 @@ export default class Layout extends React.Component {
 }
 
 function AllRoute(props) {
-    console.log(props, 'AllRoute')
+    // console.log(props, 'AllRoute')
     if(!props) {
         return
     }
