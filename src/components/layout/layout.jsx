@@ -13,6 +13,7 @@ import {
 import { Aside } from './aside'
 import MainContent from './content'
 import CInput from '../c-input/c-input'
+import CSelect from '../c-select/c-select'
 
 const { Header, Sider, Content } = CLayout
 
@@ -172,6 +173,7 @@ export default class Layout extends React.Component {
                             test="11"
                             maxLength={10}
                         />
+                        <CSelect/>
                     </Content>
                 </CLayout>
             </CLayout>
