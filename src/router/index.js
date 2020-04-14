@@ -56,6 +56,14 @@ export const routeConfig = [
                             icon: ''
                         },
                     },
+                    {
+                        path: '/table',
+                        component: require('../pages/index/index').default,
+                        meta: {
+                            name: '表格',
+                            icon: ''
+                        },
+                    },
                 ]
             },
             {

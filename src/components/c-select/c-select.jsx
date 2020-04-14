@@ -1,8 +1,12 @@
 
 import './c-select.less'
-import React from 'react'
+import React, { useState, useRef } from 'react'
+import HSelect from './h-select'
 
-export default function CSelect() {
+function CSelect(props) {
+
+    let [style, setStyle] = useState({backgroundColor: 'transparent'})
+    let ref = useRef(null)
 
     const list = [
         {
@@ -19,14 +23,36 @@ export default function CSelect() {
         },
     ]
 
+    // let style = {
+    //     backgroundColor: 'transparent'
+    // }
+
+    const handleEnter = (index, e)=> {
+        // console.log(ref,e, 'e')
+        ref.current.children[index].style.backgroundColor = props.hoverBg
+        // setStyle({
+        //     backgroundColor: props.hoverBg
+        // })
+    }
+    const handleLeave = (index, e)=> {
+        // setStyle({
+        //     backgroundColor: 'transparent'
+        // })
+        ref.current.children[index].style.backgroundColor = 'transparent'
+    }
 
     return (
         <div className="c-select-container">
             <div>select hover</div>
-            <ul className="select">
+            <ul
+                ref={ref}
+                className="select">
                 {
-                    list.map(item=> {
-                        return <li key={item.value}>
+                    list.map((item, index)=> {
+                        return <li
+                            onMouseOver={handleEnter.bind(this, index)}
+                            onMouseLeave={handleLeave.bind(this, index)}
+                            key={item.value}>
                             <span>{item.label}</span>
                         </li>
                     })
@@ -35,3 +61,5 @@ export default function CSelect() {
         </div>
     )
 }
+
+export default HSelect(CSelect)
