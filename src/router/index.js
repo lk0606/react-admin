@@ -1,6 +1,8 @@
 
 import React from 'react'
 
+
+
 export const routeConfig = [
     {
         path: '/login',
@@ -75,5 +77,13 @@ export const routeConfig = [
                 },
             },
         ]
-    }
+    },
+    {
+        path: '*',
+        component: ()=> <div>404</div>,
+        meta: {
+            name: '404',
+            icon: ''
+        }
+    },
 ]

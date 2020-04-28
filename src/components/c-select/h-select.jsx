@@ -11,7 +11,7 @@ export default function HSelect(CSelect) {
         }
 
         componentDidMount() {
-            console.log(this.state.hoverBg)
+            // console.log(this.state.hoverBg)
         }
 
         render() {

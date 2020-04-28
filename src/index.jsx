@@ -18,7 +18,7 @@ ReactDOM.render(
         <Router
             getUserConfirmation={
                 (msg, cb)=> {
-                    console.log(msg, cb, 'getUserConfirmation')
+                    console.log(msg, cb, 1, 'getUserConfirmation')
                 }
             }
         >
@@ -28,9 +28,10 @@ ReactDOM.render(
                         return <Route
                             key={key}
                             path={route.path}
-                            render={props => (
-                                <route.component {...props} children={route.children} />
-                            )}
+                            render={props => {
+                                console.log(route, 'props')
+                                return <route.component {...props} children={route.children} />
+                            }}
                         />
                     })
                 }

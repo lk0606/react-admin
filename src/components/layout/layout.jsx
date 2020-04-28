@@ -14,6 +14,7 @@ import { Aside } from './aside'
 import MainContent from './content'
 import CInput from '../c-input/c-input'
 import CSelect from '../c-select/c-select'
+import { listData } from '../../mock/list'
 
 const { Header, Sider, Content } = CLayout
 
@@ -35,6 +36,8 @@ function ChildCom(props) {
     return <p>{props.child}</p>
 }
 
+
+
 export default class Layout extends React.Component {
     constructor(props) {
         super(props)
@@ -47,6 +50,7 @@ export default class Layout extends React.Component {
         current: '1',
         dom: null,
         input: '',
+        listData,
     };
 
     changeTheme = value => {
@@ -88,9 +92,9 @@ export default class Layout extends React.Component {
         }
     }
     componentDidMount() {
-        console.log(this, 'this')
+        // console.log(this, 'this')
         this.renderDom().then(res=> {
-            console.log(res, 'res')
+            // console.log(res, 'res')
         })
     }
     pushView(path) {
@@ -98,9 +102,9 @@ export default class Layout extends React.Component {
         this.props.history.push(path)
     }
     handleInput = (data)=> {
-        console.log(data, 'handleInput parent')
+        // console.log(data, 'handleInput parent')
         this.setState({
-            input: data
+            input: data,
         })
     }
 

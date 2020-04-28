@@ -2,6 +2,8 @@
 
 // aaaaaaabbbccccddaa
 // a7b3c4d2a2
+// FIXME dd
+// TODO test
 
 function getNum(str) {
     let arr = str.split('')
