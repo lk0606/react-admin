@@ -8,6 +8,7 @@ pipeline {
       timestamps()
   }
   // tools { nodejs 'Node 9.11.2 & npm 6.11.2' }
+  tools { nodejs 'Node 14.0.0' }
   environment {
     // GIT_PROJECT_NAME = 'insurance-list-pages'
     projectName = 'react_admin_demo'
