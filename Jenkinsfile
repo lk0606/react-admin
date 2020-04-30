@@ -58,6 +58,8 @@ pipeline {
       steps {
         script {
           echo "current branch: $BRANCH_NAME"
+          echo "BUILD_NUMBER: $BUILD_NUMBER"
+          echo "projectName: ${projectName}"
           if (BRANCH_NAME.equals("dev") || BRANCH_NAME.equals("master")) {
               sshPublisher(
                   continueOnError: false, failOnError: true,
@@ -69,7 +71,7 @@ pipeline {
                               sshTransfer(
                                   sourceFiles: "./build/", // dist 为构建结果文件夹
                                   removePrefix: "build", // 部署后 URL path 不需要 ‘dist’ 路径因此去掉
-                                  remoteDirectory: "/${TEST_ENV_DEPLOY_NAME}/$BUILD_NUMBER",
+                                  remoteDirectory: "/${projectName}/$BUILD_NUMBER",
                                   execCommand: "cp -R ./build/  /usr/local/var/www/${projectName}/$BRANCH_NAME/",
                               )
                           ])
