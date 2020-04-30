@@ -14,29 +14,29 @@ pipeline {
     projectName = 'react_admin_demo'
   }
   stages {
-    stage('Preparation') {
-      steps {
-        // NOTE: node 版本在 tools 部分制定。registry/npm 镜像，sass binary 都已经全局设置好无需特殊处理。
-        sh 'npm i'
-      }
-    }
-    stage('Build') {
-      steps {
-        script {
-            echo "current branch: $BRANCH_NAME"
-            sh 'npm run build'
-            // try {
-            //   if (BRANCH_NAME.equals("master")) {
-            //     sh 'npm run build:prod'
-            //   } else {
-            //     sh 'npm run build'
-            //   }
-            // } catch(err){
-            //   throw err
-            // }
-        }
-      }
-    }
+    // stage('Preparation') {
+    //   steps {
+    //     // NOTE: node 版本在 tools 部分制定。registry/npm 镜像，sass binary 都已经全局设置好无需特殊处理。
+    //     sh 'npm i'
+    //   }
+    // }
+    // stage('Build') {
+    //   steps {
+    //     script {
+    //         echo "current branch: $BRANCH_NAME"
+    //         sh 'npm run build'
+    //         // try {
+    //         //   if (BRANCH_NAME.equals("master")) {
+    //         //     sh 'npm run build:prod'
+    //         //   } else {
+    //         //     sh 'npm run build'
+    //         //   }
+    //         // } catch(err){
+    //         //   throw err
+    //         // }
+    //     }
+    //   }
+    // }
     // stage('SonarQube Analysis') {
     //   // 如果全局执行节点（见本文件顶部 agent 配置）是 mac_pro 的，需要在静态检查阶段转到 master 执行。
     //   // agent { label 'master' }            
@@ -72,7 +72,7 @@ pipeline {
                                   sourceFiles: "./build/", // dist 为构建结果文件夹
                                   removePrefix: "build", // 部署后 URL path 不需要 ‘dist’ 路径因此去掉
                                   remoteDirectory: "/${projectName}/$BUILD_NUMBER",
-                                  execCommand: "cp -R ./build/  /usr/local/var/www/${projectName}/$BRANCH_NAME/",
+                                  execCommand: "sh ./test.sh",
                               )
                           ])
               ])
