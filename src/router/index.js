@@ -1,6 +1,7 @@
 
 import React from 'react'
-import Layout from '../components/layout/layout'
+
+
 
 export const routeConfig = [
     {
@@ -14,7 +15,6 @@ export const routeConfig = [
     {
         path: '/',
         component: require('../components/layout/layout').default,
-        // component: Layout,
         children: [
             {
                 path: '/goods',
@@ -26,17 +26,43 @@ export const routeConfig = [
                 children: [
                     {
                         path: '/nav1',
-                        component: ()=> <div>nav1</div>,
+                        component: ()=> <div>商品列表1</div>,
                         meta: {
                             name: '商品列表1',
                             icon: ''
                         },
+                        children: [
+                            {
+                                path: '/nav11',
+                                component: ()=> <div>商品列表11</div>,
+                                meta: {
+                                    name: '商品列表11',
+                                    icon: ''
+                                },
+                            },
+                            {
+                                path: '/nav12',
+                                component: ()=> <div>商品列表12</div>,
+                                meta: {
+                                    name: '商品列表12',
+                                    icon: ''
+                                },
+                            },
+                        ]
                     },
                     {
                         path: '/nav2',
-                        component: ()=> <div>nav2</div>,
+                        component: ()=> <div>商品列表2</div>,
                         meta: {
                             name: '商品列表2',
+                            icon: ''
+                        },
+                    },
+                    {
+                        path: '/table',
+                        component: require('../pages/index/index').default,
+                        meta: {
+                            name: '表格',
                             icon: ''
                         },
                     },
@@ -51,5 +77,13 @@ export const routeConfig = [
                 },
             },
         ]
-    }
+    },
+    {
+        path: '*',
+        component: ()=> <div>404</div>,
+        meta: {
+            name: '404',
+            icon: ''
+        }
+    },
 ]

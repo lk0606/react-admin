@@ -2,6 +2,10 @@
 
 import React from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
+import {connect} from 'react-redux'
+import {addTodo, apiRequest, login, sagaRequest} from '../../store/actions'
+import * as api from '../../api'
+import {userInfo} from '../../store/reducers'
 
 const layout = {
     labelCol: {
@@ -18,11 +22,20 @@ const tailLayout = {
     },
 };
 
-export default function Login() {
+function Login(props) {
+    console.log('login props:', props)
+
     const onFinish = values => {
         console.log('Success:', values);
         if(values.username && values.password) {
-            window.location.href = '/'
+            props.sagaRequest(values)
+            // props.login(values).then(res=> {
+            //     console.log(res, 'res')
+            //     alert(`欢迎：${res.data.username}`)
+            // })
+            // if(props.userInfo && props.userInfo.userInfo && props.userInfo.userInfo.username) {
+            //     alert(`欢迎：${props.userInfo.userInfo.username}`)
+            // }
         }
     };
 
@@ -37,7 +50,7 @@ export default function Login() {
                 name="basic"
                 initialValues={{
                     username: 'admin',
-                    password: '1234',
+                    password: '123',
                     remember: true,
                 }}
                 onFinish={onFinish}
@@ -82,3 +95,15 @@ export default function Login() {
         </div>
     );
 }
+const mapStateToProps = (state) => {
+    console.log(state, 'state login')
+    return state
+};
+
+const mapDispatchToProps = dispatch => ({
+    login: ({username, password})=> dispatch(login({username, password})),
+    sagaRequest: ({username, password})=> dispatch(sagaRequest({username, password})),
+    addTodo: ()=> dispatch(addTodo('Learn about actions'))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

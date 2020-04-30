@@ -11,7 +11,7 @@ files.keys().forEach(key => {
     console.log(name, key, 'name')
     modules[name] = files(key).default || files(key)
 })
-console.log(modules, files, 'modules files')
+// console.log(modules, files, 'modules files')
 export default  {
     modules
 }

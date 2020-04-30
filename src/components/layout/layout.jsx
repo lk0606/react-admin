@@ -10,6 +10,11 @@ import {
     VideoCameraOutlined,
     UploadOutlined,
 } from '@ant-design/icons'
+import { Aside } from './aside'
+import MainContent from './content'
+import CInput from '../c-input/c-input'
+import CSelect from '../c-select/c-select'
+import { listData } from '../../mock/list'
 
 const { Header, Sider, Content } = CLayout
 
@@ -22,7 +27,7 @@ const menu = (
             <span>噗呲</span>
         </Menu.Item>
         <Menu.Item>
-            <a href="/login">注销</a>
+            <Link to="/login">注销</Link>
             {/*<span></span>*/}
         </Menu.Item>
     </Menu>
@@ -31,28 +36,32 @@ function ChildCom(props) {
     return <p>{props.child}</p>
 }
 
+
+
 export default class Layout extends React.Component {
     constructor(props) {
         super(props)
-        console.log(props, 'props')
+        // console.log(props, 'props Layout')
     }
 
     state = {
         collapsed: false,
         theme: 'dark',
         current: '1',
-        dom: null
+        dom: null,
+        input: '',
+        listData,
     };
 
     changeTheme = value => {
-        console.log(value, 'changeTheme')
+        // console.log(value, 'changeTheme')
         this.setState({
             theme: value ? 'dark' : 'light',
         });
     };
 
     handleClick = e => {
-        console.log('click ', e);
+        // console.log('click ', e);
         this.setState({
             current: e.key,
         })
@@ -83,11 +92,20 @@ export default class Layout extends React.Component {
         }
     }
     componentDidMount() {
-        this.renderDom()
+        // console.log(this, 'this')
+        this.renderDom().then(res=> {
+            // console.log(res, 'res')
+        })
     }
-    pushView(route) {
-        console.log(route, this, 'pushView')
-        this.props.history.push(route.path)
+    pushView(path) {
+        console.log(path, this, 'pushView')
+        this.props.history.push(path)
+    }
+    handleInput = (data)=> {
+        // console.log(data, 'handleInput parent')
+        this.setState({
+            input: data,
+        })
     }
 
     render() {
@@ -114,29 +132,10 @@ export default class Layout extends React.Component {
                         checkedChildren="Dark"
                         unCheckedChildren="Light"
                     />
-
-                    <Menu
-                        theme={this.state.theme} mode="inline" defaultSelectedKeys={'0'}>
-                        {
-                            this.props.routes.map((item, index)=> {
-                                return <Menu.Item
-                                    onClick={this.pushView.bind(this, item)}
-                                    key={index}>
-                                    <UserOutlined />
-                                    <span>{item.meta.name}</span>
-                                </Menu.Item>
-                            })
-                            // this.props.routes.map((item, index)=> {
-                            //     return <Menu.Item
-                            //         key={index}>
-                            //         <Link to={item.path}>
-                            //             <UserOutlined />
-                            //             <span>{item.meta.name}</span>
-                            //         </Link>
-                            //     </Menu.Item>
-                            // })
-                        }
-                    </Menu>
+                    <Aside
+                        onHandleRoute={this.pushView.bind(this)}
+                        theme={this.state.theme}
+                        children={this.props.children}/>
                 </Sider>
                 <CLayout className="site-layout">
                     <Header className="header-wrap" style={{ padding: 0 }}>
@@ -162,14 +161,23 @@ export default class Layout extends React.Component {
                         }}
                     >
                         {
-                            this.props.routes.map((item,index)=>{
-                                return <Route key={index} exact path={item.path} component={item.component}/>
+                            this.props.children.map(item=>{
+                                // console.log(item, 'layout item')
+                                return AllRoute(item)
                             })
                         }
+
                         {
 
                             test()
                         }
+                        <CInput
+                            myInput={this.handleInput}
+                            input={this.state.input}
+                            test="11"
+                            maxLength={10}
+                        />
+                        <CSelect/>
                     </Content>
                 </CLayout>
             </CLayout>
@@ -177,4 +185,23 @@ export default class Layout extends React.Component {
     }
 }
 
-// ReactDOM.render(<SiderDemo />, mountNode);
+function AllRoute(props) {
+    // console.log(props, 'AllRoute')
+    if(!props) {
+        return
+    }
+    if(props.hasOwnProperty('children')) {
+        return props.children.map(item=> {
+            return AllRoute(item)
+        })
+    } else {
+        return <Route
+            key={props.path}
+            exact={props.exact}
+            path={props.path}
+            render={childProp => {
+                return <props.component {...childProp} />
+            }}
+        />
+    }
+}
