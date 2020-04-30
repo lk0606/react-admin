@@ -72,7 +72,7 @@ pipeline {
                                   sourceFiles: "./build/", // dist 为构建结果文件夹
                                   removePrefix: "build", // 部署后 URL path 不需要 ‘dist’ 路径因此去掉
                                   remoteDirectory: "/${projectName}/$BUILD_NUMBER",
-                                  execCommand: "sh ./test.sh",
+                                  execCommand: "pwd && sh test.sh",
                               )
                           ])
               ])
