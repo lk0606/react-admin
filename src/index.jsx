@@ -29,7 +29,7 @@ ReactDOM.render(
                             key={key}
                             path={route.path}
                             render={props => {
-                                console.log(route, 'props')
+                                // console.log(route, 'props')
                                 return <route.component {...props} children={route.children} />
                             }}
                         />

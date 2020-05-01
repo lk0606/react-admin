@@ -1,9 +1,10 @@
 
 import React from 'react'
-import { Table, Button, Modal } from 'antd'
+import { Table, Button, Modal, Tabs } from 'antd'
 import { connect } from 'react-redux'
-
-import './test.js'
+import { tableValue, listData as data } from '../../mock/list'
+const { TabPane } = Tabs
+// import './test.js'
 
 const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -17,37 +18,38 @@ const columns = [
     },
   ];
 
-  const data = [
-    {
-      key: 1,
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-    },
-    {
-      key: 2,
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-    },
-    {
-      key: 3,
-      name: 'Not Expandable',
-      age: 29,
-      address: 'Jiangsu No. 1 Lake Park',
-      description: 'This not expandable',
-    },
-    {
-      key: 4,
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-    },
-  ];
+function callback(key) {
+  console.log(key, 'tabs key');
+}
+function getColumn(data) {
+  console.log(data, 'data')
+  if(!data) {
+    return []
+  }
+  return data.tableData[0].columnName.map(item=> {
+    return {
+      title: item, 
+      dataIndex: item, 
+      key: item
+    }
+  })
+}
+function getDataSource(data) {
+  if(!data) {
+    return []
+  }
+  return data.tableData[0].data.map((item, index)=> {
+    return {
+      key: index+1,
+      "应用名": item['应用名'],
+      "数据库租户": <a href={item['数据库租户'].split('#url#')[1]}>{item['数据库租户'].split('#url#')[0]}</a>,
+      "tenant_topology服务器": <a href={item['tenant_topology服务器'].split('#url#')[1]}>{item['tenant_topology服务器'].split('#url#')[0]}</a>,
+      "机房": item['机房'],
+    }
+  })
+}
 
+// const tableHeader = 
 export default function Index() {
 
 
@@ -69,13 +71,26 @@ export default function Index() {
     return (
         <div className="index-container">
             <Button type="primary">增加</Button>
-            <Table
+            {/* <Table
                 columns={columns}
                 expandable={{
                 rowExpandable: record => record.name !== 'Not Expandable',
                 }}
                 dataSource={data}
-            />
+            /> */}
+            <Tabs defaultActiveKey="1" onChange={callback}>
+              {
+                tableValue.map((item, index)=> {
+                  return <TabPane tab={item.title} key={index+1}>
+                      <Table
+                        title={() => item.table ? item.table.tableTitleName : 'table 为null'}
+                        columns={getColumn(item.table)}
+                        dataSource={getDataSource(item.table)}
+                      />
+                </TabPane>
+                })
+              }
+            </Tabs>
 
             <Modal
                 title="Basic Modal"

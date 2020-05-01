@@ -8,7 +8,7 @@ const files = require.context('../pages', true, /\.jsx$/)
 const modules = {}
 files.keys().forEach(key => {
     const name = path.basename(key)
-    console.log(name, key, 'name')
+    // console.log(name, key, 'name')
     modules[name] = files(key).default || files(key)
 })
 // console.log(modules, files, 'modules files')

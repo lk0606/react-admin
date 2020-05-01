@@ -63,7 +63,7 @@ const initUser = {
 // }
 
 export function userInfo(state = {}, action) {
-    console.log(state, action, 'login reducer')
+    // console.log(state, action, 'login reducer')
     switch (action.type) {
         case ApiRequest:
             return state
