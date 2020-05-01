@@ -39,10 +39,10 @@ function ChildCom(props) {
 
 
 export default class Layout extends React.Component {
-    constructor(props) {
-        super(props)
-        // console.log(props, 'props Layout')
-    }
+    // constructor(props) {
+    //     super(props)
+    //     console.log(props, 'props Layout')
+    // }
 
     state = {
         collapsed: false,

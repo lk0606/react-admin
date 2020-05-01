@@ -14,7 +14,7 @@ const columns = [
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: () => <a>Delete</a>,
+      render: () => <a href="www.baidu.com">Delete</a>,
     },
   ];
 

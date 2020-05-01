@@ -8,7 +8,7 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 //     return config;
 // };
 
-module.exports =override(
+module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd',
         libraryDirectory: 'es',

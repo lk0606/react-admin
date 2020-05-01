@@ -12,17 +12,6 @@
     "c-p:cls": "hygen pages-class-jsx with-prompt",
     "c-c:cls": "hygen components-class-jsx with-prompt"
   },
-  "eslintIgnore": [
-    "src/**"
-  ],
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "no-unused-vars": "off"
-    }
-  },
   "homepage": ".",
   "browserslist": {
     "production": [

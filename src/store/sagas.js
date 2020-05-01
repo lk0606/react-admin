@@ -6,7 +6,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 
 export function* helloSaga() {
     console.log('Hello Sagas!');
-    // yield 'Hello Sagas!'
+    yield 'Hello Sagas!'
 }
 
 export function* testLogin(action) {
