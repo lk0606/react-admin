@@ -38,7 +38,18 @@ function getDataSource(data) {
   if(!data) {
     return []
   }
+  const columnNames = data.tableData[0].columnName
   return data.tableData[0].data.map((item, index)=> {
+    let obj = { key: index+1 }
+    
+    columnNames.forEach(name=> {
+      if(['数据库租户', 'tenant_topology服务器'].includes(name)) {
+        obj[name] = <a href={item[name].split('#url#')[1]}>{item[name].split('#url#')[0]}</a>
+      } else {
+        obj[name] = item[name]
+      }
+    })
+    return obj
     return {
       key: index+1,
       "应用名": item['应用名'],
