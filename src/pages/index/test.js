@@ -1,5 +1,3 @@
-
-
 // aaaaaaabbbccccddaa
 // a7b3c4d2a2
 // FIXME dd
@@ -11,10 +9,10 @@ function getNum(str) {
     let temp = arr[0]
     let count = 1
     let result = arr[0]
-    for(let i=1; i<arr.length; i++ ) {
+    for (let i = 1; i < arr.length; i++) {
         const cur = arr[i]
-        if(temp===cur) {
-            count ++ 
+        if (temp === cur) {
+            count++
         } else {
             temp = cur
             result = result + count + temp
