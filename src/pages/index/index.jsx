@@ -42,16 +42,14 @@ function getDataSource(data) {
         let obj = { key: index + 1 }
 
         columnNames.forEach((name) => {
-            if (['数据库租户', 'tenant_topology服务器'].includes(name)) {
-                const [text, url] =
-                    item[name] &&
-                    typeof item[name] === 'string' &&
-                    item[name].split('#url#')
-                if (!url) {
-                    obj[name] = <span>{text}</span>
-                } else {
-                    obj[name] = <a href={url}>{text}</a>
-                }
+            if (
+                item[name] &&
+                typeof item[name] === 'string' &&
+                item[name].split('#url#') &&
+                item[name].split('#url#').length === 2
+            ) {
+                const [text, url] = item[name].split('#url#')
+                obj[name] = <a href={url}>{text}</a>
             } else {
                 obj[name] = item[name]
             }
