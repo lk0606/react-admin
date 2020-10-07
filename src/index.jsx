@@ -1,47 +1,43 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-// import { Router, Route, useHistory } from 'react-router'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { routeConfig } from './router/index'
-import { modules } from './router/route.config'
-import RouteConfigExample from './router/example'
-import './assets/styles/index.css';
 import store from './store'
+import { message } from 'antd'
 
-
-import * as serviceWorker from './serviceWorker';
-// console.log(Router, 'Router')
+import './assets/styles/index.less'
+import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router
-            getUserConfirmation={
-                (msg, cb)=> {
-                    console.log(msg, cb, 1, 'getUserConfirmation')
-                }
-            }
-        >
+        <Router>
             <Switch>
-                {
-                    routeConfig.map((route,key)=>{
-                        return <Route
+                {routeConfig.map((route, key) => {
+                    return (
+                        <Route
                             key={key}
                             path={route.path}
-                            render={props => {
+                            render={(props) => {
                                 // console.log(route, 'props')
-                                return <route.component {...props} children={route.children} />
+                                return (
+                                    <route.component
+                                        {...props}
+                                        message={message}
+                                        children={route.children}
+                                    />
+                                )
                             }}
                         />
-                    })
-                }
+                    )
+                })}
             </Switch>
         </Router>
     </Provider>,
     document.getElementById('root')
-);
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.unregister()

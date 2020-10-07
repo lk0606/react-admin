@@ -1,5 +1,4 @@
-
-import * as api from '../api'
+import { getUserInfo } from '../api/user'
 /*
  * action 类型
  */
@@ -19,45 +18,47 @@ export const ApiError = 'ApiError'
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
+    SHOW_ACTIVE: 'SHOW_ACTIVE',
 }
 
 /*
  * action 创建函数
  */
 
-export function login(params) {
-    return dispatch=> {
+export function loginAction(params) {
+    return (dispatch) => {
         dispatch(apiRequest())
-        return api.login(params).then(res=> {
-            return dispatch(apiSuccess(res.user))
-        }).catch(err=> {
-            dispatch(apiError(err))
-        })
+        return getUserInfo(params)
+            .then((res) => {
+                return dispatch(apiSuccess(res.user))
+            })
+            .catch((err) => {
+                dispatch(apiError(err))
+            })
     }
 }
 
 export function sagaRequest(data) {
     return {
         type: 'sagaRequest',
-        data
+        data,
     }
 }
 export function apiRequest() {
     return {
-        type: ApiRequest
+        type: ApiRequest,
     }
 }
 export function apiSuccess(data) {
     return {
         type: ApiSuccess,
-        data
+        data,
     }
 }
 export function apiError(data) {
     return {
         type: ApiError,
-        data
+        data,
     }
 }
 
