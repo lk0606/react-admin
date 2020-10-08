@@ -5,7 +5,7 @@ import qs from 'qs'
 // create an axios instance
 const service = axios.create({
     // baseURL: 'http://localhost:8080', // api的base_url
-    baseURL: 'http://localhost:3000/v1', // api的base_url
+    baseURL: 'http://localhost:3000', // api的base_url
     timeout: 1000000, // request timeout/
     // headers: {
     //   // 'lk-auth': 'lk-admin '
