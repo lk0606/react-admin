@@ -1,2 +1,4 @@
 /_templates
 # src/
+dist
+node_modules
