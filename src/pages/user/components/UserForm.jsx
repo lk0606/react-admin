@@ -35,6 +35,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
             }
             return [
                 {
+                    required,
                     validator,
                     message,
                 },
@@ -59,7 +60,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
     }
 
     useEffect(() => {
-        if (activeKey === 'register') {
+        if (activeKey === 'login') {
             onCaptcha()
         }
     }, [activeKey])
@@ -91,17 +92,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 />
             </Form.Item>
 
-            {activeKey === 'login' ? (
-                <Form.Item
-                    // {...tailLayout}
-                    name="remember"
-                    valuePropName="checked"
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-            ) : null}
-
-            {activeKey === 'register' ? (
+            {activeKey === 'register' && (
                 <>
                     <Form.Item
                         label="Email"
@@ -112,35 +103,36 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                             prefix={<MailOutlined className="form-item-icon" />}
                         />
                     </Form.Item>
-                    {captchaInfo.data ? (
-                        <Form.Item
-                            // {...tailLayout}
-                            label="Captcha"
-                            name="captcha"
-                            rules={rules(
-                                'Please input correct captcha!',
-                                'captcha'
-                            )}
-                            extra="We must make sure that your are a human."
-                        >
-                            <div className="df">
-                                <Input />
-                                <div
-                                    className="captcha-wrap"
-                                    dangerouslySetInnerHTML={{
-                                        __html: captchaInfo.data,
-                                    }}
-                                    onClick={onCaptcha}
-                                ></div>
-                            </div>
-                        </Form.Item>
-                    ) : null}
                 </>
-            ) : null}
+            )}
 
             <Form.Item
-            // {...tailLayout}
+                label="Captcha"
+                name="captcha"
+                rules={rules('Please input correct captcha!', 'captcha')}
+                extra="We must make sure that your are a human."
             >
+                <div className="df">
+                    <Input />
+                    {activeKey === 'login' && (
+                        <div
+                            className="captcha-wrap"
+                            dangerouslySetInnerHTML={{
+                                __html: captchaInfo.data || '验证码加载失败',
+                            }}
+                            onClick={onCaptcha}
+                        ></div>
+                    )}
+                </div>
+            </Form.Item>
+
+            {activeKey === 'login' && (
+                <Form.Item name="remember" valuePropName="checked">
+                    <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+            )}
+
+            <Form.Item>
                 <Button type="primary" htmlType="submit">
                     {activeKey}
                 </Button>
