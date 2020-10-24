@@ -49,6 +49,11 @@ service.interceptors.response.use(
             // debugger
             return res
         }
+        if (!res.data.success) {
+            const { message: errMsg = '数据异常' } = res.data
+            message.error(errMsg)
+            return Promise.reject(res.data)
+        }
         return Promise.resolve(res.data)
         // return res
     },

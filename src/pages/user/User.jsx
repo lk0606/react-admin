@@ -41,7 +41,9 @@ function User(props) {
         try {
             const { message } = await getUserInfo(values)
             props.message.success(message)
-        } catch (error) {}
+        } catch (error) {
+            console.log('error :>> ', error)
+        }
     }
 
     const handleReg = async (values) => {
