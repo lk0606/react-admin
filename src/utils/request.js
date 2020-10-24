@@ -8,11 +8,11 @@ const service = axios.create({
     // baseURL: 'http://localhost:8080', // api的base_url
     baseURL: 'http://localhost:3000', // api的base_url
     timeout: 10000, // request timeout/
-    // headers: {
-    //   // 'lk-auth': 'lk-admin '
-    //   'X-Requested-With': 'XMLHttpRequest',
-    //   'Content-Type': 'application/json'
-    // },
+    headers: {
+        //   'lk-auth': 'lk-admin',
+        //   'X-Requested-With': 'XMLHttpRequest',
+        //   'Content-Type': 'application/json'
+    },
 })
 
 // 发送请求前对请求数据进行处理
