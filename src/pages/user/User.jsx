@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Tabs } from 'antd'
 import UserForm from './components/UserForm'
 import { connect } from 'react-redux'
@@ -12,21 +12,12 @@ import { getUserInfo, reg } from '../../api/user'
 import './index.less'
 
 const form = {
-    login:
-        // [
-        //     {
-        //         label: '昵称',
-        //         name: 'username',
-        //         value: 'admin',
-        //         rules: [],
-        //     },
-        // ],
-        {
-            label: '登录',
-            username: 'admin',
-            password: '123',
-            remember: true,
-        },
+    login: {
+        label: '登录',
+        username: 'admin',
+        password: '123',
+        remember: true,
+    },
     register: {
         username: '',
         password: '',
@@ -75,7 +66,7 @@ function User(props) {
             >
                 <Tabs.TabPane tab="登录" key="login">
                     <UserForm
-                        activeKey={activeKey}
+                        activeKey="login"
                         onFinish={handleLogin}
                         onFinishFailed={onFinishFailed}
                         userInfo={form.login}
@@ -83,7 +74,7 @@ function User(props) {
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="注册" key="register">
                     <UserForm
-                        activeKey={activeKey}
+                        activeKey="register"
                         onFinish={handleReg}
                         onFinishFailed={onFinishFailed}
                         userInfo={form.register}

@@ -1,12 +1,13 @@
 import axios from 'axios'
 import qs from 'qs'
+import { message } from 'antd'
 
 // const httpAgent = new http.Agent({ keepAlive: true });
 // create an axios instance
 const service = axios.create({
     // baseURL: 'http://localhost:8080', // api的base_url
     baseURL: 'http://localhost:3000', // api的base_url
-    timeout: 1000000, // request timeout/
+    timeout: 10000, // request timeout/
     // headers: {
     //   // 'lk-auth': 'lk-admin '
     //   'X-Requested-With': 'XMLHttpRequest',
@@ -51,8 +52,10 @@ service.interceptors.response.use(
         return Promise.resolve(res.data)
         // return res
     },
-    (err) => {
-        console.log(err, 'err')
+    (err = {}) => {
+        const { message: errMsg = '服务器异常' } = err
+        // console.log('err, message :>> ', err, message)
+        message.error(errMsg)
         return Promise.reject(err)
     }
 )
