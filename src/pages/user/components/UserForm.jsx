@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, message as Message } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { getCaptcha } from '../../../api/common'
+import { getCaptcha, getCaptchaByEmail } from '../../../api/common'
 
 const layout = {
     labelCol: {
@@ -11,22 +11,17 @@ const layout = {
         span: 18,
     },
 }
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 18,
-    },
-}
 
-const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
+const UserForm = ({ userInfo = {}, onFinish, onFinishFailed, activeKey }) => {
     const [captchaInfo, setCaptchaInfo] = useState({
         text: '',
         data: '',
     })
+    const [form] = Form.useForm()
     const rules = (message, type = 'string', required = true) => {
         if (type === 'captcha') {
             const validator = async (rule, value) => {
-                console.log('value,  :>> ', value, captchaInfo.text)
+                // console.log('value,  :>> ', value, captchaInfo.text)
                 if (!new RegExp(`${captchaInfo.text}`, 'i').test(value)) {
                     return Promise.reject(rule.message)
                 } else {
@@ -55,7 +50,18 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
         try {
             const { data = {} } = (await getCaptcha()) || {}
             setCaptchaInfo(data)
-            // return result
+        } catch (error) {}
+    }
+
+    const onCaptchaByEmail = async () => {
+        try {
+            const data = await form.validateFields([
+                'username',
+                'password',
+                'email',
+            ])
+            const { message } = await getCaptchaByEmail(data)
+            Message.success(message)
         } catch (error) {}
     }
 
@@ -69,6 +75,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
         <Form
             labelAlign="left"
             {...layout}
+            form={form}
             name={activeKey}
             initialValues={userInfo}
             onFinish={onFinish}
@@ -79,7 +86,10 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 name="username"
                 rules={rules('Please input your username!')}
             >
-                <Input prefix={<UserOutlined className="form-item-icon" />} />
+                <Input
+                    placeholder="Please input your username"
+                    prefix={<UserOutlined className="form-item-icon" />}
+                />
             </Form.Item>
 
             <Form.Item
@@ -88,22 +98,22 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 rules={rules('Please input your password!')}
             >
                 <Input.Password
+                    placeholder="Please input your password"
                     prefix={<LockOutlined className="form-item-icon" />}
                 />
             </Form.Item>
 
             {activeKey === 'register' && (
-                <>
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={rules('Please input correct email!', 'email')}
-                    >
-                        <Input
-                            prefix={<MailOutlined className="form-item-icon" />}
-                        />
-                    </Form.Item>
-                </>
+                <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={rules('Please input correct email!', 'email')}
+                >
+                    <Input
+                        placeholder="input your email, to get captcha"
+                        prefix={<MailOutlined className="form-item-icon" />}
+                    />
+                </Form.Item>
             )}
 
             <Form.Item
@@ -113,10 +123,19 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 extra="We must make sure that your are a human."
             >
                 <div className="df">
-                    <Input />
+                    <Input placeholder="input four code" />
+                    {activeKey === 'register' && (
+                        <Button
+                            type="primary"
+                            className="ml10"
+                            onClick={onCaptchaByEmail}
+                        >
+                            获取验证码
+                        </Button>
+                    )}
                     {activeKey === 'login' && (
                         <div
-                            className="captcha-wrap"
+                            className="ml10 captcha-wrap"
                             dangerouslySetInnerHTML={{
                                 __html: captchaInfo.data || '验证码加载失败',
                             }}

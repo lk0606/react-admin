@@ -21,6 +21,7 @@ const form = {
     register: {
         username: '',
         password: '',
+        email: '',
         captcha: '',
     },
 }
@@ -78,8 +79,8 @@ function User(props) {
                     <UserForm
                         activeKey="register"
                         onFinish={handleReg}
-                        onFinishFailed={onFinishFailed}
                         userInfo={form.register}
+                        onFinishFailed={onFinishFailed}
                     />
                 </Tabs.TabPane>
             </Tabs>
