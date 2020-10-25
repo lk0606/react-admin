@@ -1,16 +1,18 @@
 import axios from 'axios'
 import qs from 'qs'
 import { message } from 'antd'
+import Cookies from 'js-cookie'
 
-// const httpAgent = new http.Agent({ keepAlive: true });
+const timeout =
+    process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
+
 // create an axios instance
 const service = axios.create({
-    // baseURL: 'http://localhost:8080', // api的base_url
     baseURL: 'http://localhost:3000', // api的base_url
-    timeout: 10000, // request timeout/
+    timeout, // request timeout/
+    withCredentials: true,
     headers: {
-        //   'lk-auth': 'lk-admin',
-        //   'X-Requested-With': 'XMLHttpRequest',
+        Authorization: `Bearer ${Cookies.get('token')}`, // 写到具体需要接口上
         //   'Content-Type': 'application/json'
     },
 })
@@ -44,6 +46,9 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
     (res) => {
+        if (res.config.url.indexOf('user/getUserInfo') > -1) {
+            window.location.reload()
+        }
         // console.log(res, 'res')
         if (res.headers['content-type'] === 'video/mp4') {
             // debugger
@@ -57,9 +62,10 @@ service.interceptors.response.use(
         return Promise.resolve(res.data)
         // return res
     },
-    (err = {}) => {
-        const { message: errMsg = '服务器异常' } = err
-        // console.log('err, message :>> ', err, message)
+    (err) => {
+        const { message: errMsg = '服务器异常' } = err || {}
+        if (err.response.status === 401) {
+        }
         message.error(errMsg)
         return Promise.reject(err)
     }
