@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Tabs } from 'antd'
 import UserForm from './components/UserForm'
 import { connect } from 'react-redux'
+import crypto from 'crypto-js/sha1'
 import {
     addTodo,
     apiRequest,
@@ -15,7 +16,7 @@ const form = {
     login: {
         label: '登录',
         username: 'admin',
-        password: '123',
+        password: '5456',
         remember: true,
     },
     register: {
@@ -38,8 +39,11 @@ function User(props) {
     // props.sagaRequest(values)
     // };
 
-    const handleLogin = async (values) => {
+    const handleLogin = async (values = {}) => {
         try {
+            const { password = '' } = values
+            const hash = crypto(password).toString()
+            values.password = hash
             const { message } = await getUserInfo(values)
             props.message.success(message)
         } catch (error) {
@@ -49,6 +53,9 @@ function User(props) {
 
     const handleReg = async (values) => {
         try {
+            const { password = '' } = values
+            const hash = crypto(password).toString()
+            values.password = hash
             const { message } = await reg(values)
             props.message.success(message)
         } catch (error) {}

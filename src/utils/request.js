@@ -2,6 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 import { message } from 'antd'
 import Cookies from 'js-cookie'
+// import { get } from '@wont/utils'
+import { get } from 'lodash'
 
 const timeout =
     process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
@@ -47,7 +49,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (res) => {
         if (res.config.url.indexOf('user/getUserInfo') > -1) {
-            window.location.reload()
+            // window.location.reload()
         }
         // console.log(res, 'res')
         if (res.headers['content-type'] === 'video/mp4') {
@@ -64,7 +66,8 @@ service.interceptors.response.use(
     },
     (err) => {
         const { message: errMsg = '服务器异常' } = err || {}
-        if (err.response.status === 401) {
+        const { status } = get(err, 'response', {})
+        if (status === 401) {
         }
         message.error(errMsg)
         return Promise.reject(err)
