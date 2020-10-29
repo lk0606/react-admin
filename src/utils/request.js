@@ -2,8 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { message } from 'antd'
 import Cookies from 'js-cookie'
-// import { get } from '@wont/utils'
-import { get } from 'lodash'
+import { get } from '@wont/utils'
 
 const timeout =
     process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
