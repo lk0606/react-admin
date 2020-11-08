@@ -1,5 +1,5 @@
 
-source_dir=$1/dist
+source_dir=$1/$build_dir
 build_dir=$2
 project_name=$3
 branch_name=$4
