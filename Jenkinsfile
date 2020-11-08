@@ -7,7 +7,7 @@ pipeline {
     }
     tools { nodejs 'NodeJs_14_lts' }
     environment {
-        project_name = 'admin-react-demo'
+        project_name = 'self_admin_react'
         build_dir = 'build'
         source_dir = '/docker_root/jenkins/workspace'
         target_dir = '/www/wwwroot'
