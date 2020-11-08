@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    // options {
-    //     disableConcurrentBuilds()
-    //     timeout(time: 30, unit: 'MINUTES')
-    //     timestamps()
-    // }
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 10, unit: 'MINUTES')
+        timestamps()
+    }
     tools { nodejs 'NodeJs_14_lts' }
     environment {
         project_name = 'admin-react-demo'
@@ -18,6 +18,7 @@ pipeline {
                 sh 'node -v'
                 sh 'npm -v'
                 sh 'npm config set registry https://registry.npm.taobao.org/'
+                sh 'npm config get registry'
                 sh 'npm i'
             }
         }
