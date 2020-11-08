@@ -1,15 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'node'
-        }
-    }
+    agent any
     // options {
     //     disableConcurrentBuilds()
     //     timeout(time: 30, unit: 'MINUTES')
     //     timestamps()
     // }
-    // tools { nodejs 'NodeJs_14_lts' }
+    tools { nodejs 'NodeJs_14_lts' }
     environment {
         project_name = 'admin-react-demo'
         build_dir = 'build'
