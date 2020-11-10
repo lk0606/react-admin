@@ -6,10 +6,14 @@ import { get } from '@wont/utils'
 
 const timeout =
     process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
+const baseURL =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:13000'
+        : 'http://wont-org.cn:13000'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: process.env.BASE_URL, // api的base_url
+    baseURL, // api的base_url
     timeout, // request timeout/
     withCredentials: true,
     headers: {

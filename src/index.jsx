@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+    BrowserRouter as Router,
+    HashRouter,
+    Route,
+    Switch,
+} from 'react-router-dom'
 import { routeConfig } from './router/index'
 import store from './store'
 import { message } from 'antd'
@@ -11,7 +16,7 @@ import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <HashRouter>
             <Switch>
                 {routeConfig.map((route, key) => {
                     return (
@@ -32,7 +37,7 @@ ReactDOM.render(
                     )
                 })}
             </Switch>
-        </Router>
+        </HashRouter>
     </Provider>,
     document.getElementById('root')
 )
