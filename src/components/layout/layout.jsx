@@ -1,7 +1,13 @@
-
 import './layout.less'
-import React, {lazy} from 'react'
-import { Route, Switch as RouteSwitch, Link, useRouteMatch, useHistory, HashRouter } from "react-router-dom"
+import React, { lazy } from 'react'
+import {
+    Route,
+    Switch as RouteSwitch,
+    Link,
+    useRouteMatch,
+    useHistory,
+    HashRouter,
+} from 'react-router-dom'
 import { Layout as CLayout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
 import {
     MenuUnfoldOutlined,
@@ -27,16 +33,14 @@ const menu = (
             <span>噗呲</span>
         </Menu.Item>
         <Menu.Item>
-            <Link to="/login">注销</Link>
+            <Link to="/user">注销</Link>
             {/*<span></span>*/}
         </Menu.Item>
     </Menu>
-);
+)
 function ChildCom(props) {
     return <p>{props.child}</p>
 }
-
-
 
 export default class Layout extends React.Component {
     // constructor(props) {
@@ -51,16 +55,16 @@ export default class Layout extends React.Component {
         dom: null,
         input: '',
         listData,
-    };
+    }
 
-    changeTheme = value => {
+    changeTheme = (value) => {
         // console.log(value, 'changeTheme')
         this.setState({
             theme: value ? 'dark' : 'light',
-        });
-    };
+        })
+    }
 
-    handleClick = e => {
+    handleClick = (e) => {
         // console.log('click ', e);
         this.setState({
             current: e.key,
@@ -74,17 +78,17 @@ export default class Layout extends React.Component {
     }
     api() {
         return new Promise((resolve, reject) => {
-            setTimeout(()=> {
+            setTimeout(() => {
                 resolve(true)
-            },500)
+            }, 500)
         })
     }
     async renderDom() {
         try {
             let dom = await this.api()
-            if(dom) {
+            if (dom) {
                 this.setState({
-                    dom: 3
+                    dom: 3,
                 })
             }
         } catch (e) {
@@ -93,7 +97,7 @@ export default class Layout extends React.Component {
     }
     componentDidMount() {
         // console.log(this, 'this')
-        this.renderDom().then(res=> {
+        this.renderDom().then((res) => {
             // console.log(res, 'res')
         })
     }
@@ -101,7 +105,7 @@ export default class Layout extends React.Component {
         console.log(path, this, 'pushView')
         this.props.history.push(path)
     }
-    handleInput = (data)=> {
+    handleInput = (data) => {
         // console.log(data, 'handleInput parent')
         this.setState({
             input: data,
@@ -111,10 +115,12 @@ export default class Layout extends React.Component {
     render() {
         const _this = this
         function dom(type) {
-            return <div>
-                <p>state: {type}</p>
-                <ChildCom child={"child:" + type}/>
-            </div>
+            return (
+                <div>
+                    <p>state: {type}</p>
+                    <ChildCom child={'child:' + type} />
+                </div>
+            )
         }
 
         function test() {
@@ -123,9 +129,12 @@ export default class Layout extends React.Component {
 
         return (
             <CLayout className="layout-container">
-                <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-                    <div className="logo">
-                    </div>
+                <Sider
+                    trigger={null}
+                    collapsible
+                    collapsed={this.state.collapsed}
+                >
+                    <div className="logo"></div>
                     <Switch
                         checked={this.state.theme === 'dark'}
                         onChange={this.changeTheme}
@@ -135,19 +144,28 @@ export default class Layout extends React.Component {
                     <Aside
                         onHandleRoute={this.pushView.bind(this)}
                         theme={this.state.theme}
-                        children={this.props.children}/>
+                        children={this.props.children}
+                    />
                 </Sider>
                 <CLayout className="site-layout">
                     <Header className="header-wrap" style={{ padding: 0 }}>
-                        {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,{
-                            className: 'trigger',
-                            onClick: this.toggle,
-                        })}
+                        {React.createElement(
+                            this.state.collapsed
+                                ? MenuUnfoldOutlined
+                                : MenuFoldOutlined,
+                            {
+                                className: 'trigger',
+                                onClick: this.toggle,
+                            }
+                        )}
                         <div className="header-right">
                             <span className="avatar-item">
                                 <Dropdown overlay={menu}>
                                     <Badge count={1}>
-                                        <Avatar shape="square" icon={<UserOutlined />} />
+                                        <Avatar
+                                            shape="square"
+                                            icon={<UserOutlined />}
+                                        />
                                     </Badge>
                                 </Dropdown>
                             </span>
@@ -160,48 +178,45 @@ export default class Layout extends React.Component {
                             minHeight: 280,
                         }}
                     >
-                        {
-                            this.props.children.map(item=>{
-                                // console.log(item, 'layout item')
-                                return AllRoute(item)
-                            })
-                        }
+                        {this.props.children.map((item) => {
+                            // console.log(item, 'layout item')
+                            return AllRoute(item)
+                        })}
 
-                        {
-
-                            test()
-                        }
+                        {test()}
                         <CInput
                             myInput={this.handleInput}
                             input={this.state.input}
                             test="11"
                             maxLength={10}
                         />
-                        <CSelect/>
+                        <CSelect />
                     </Content>
                 </CLayout>
             </CLayout>
-        );
+        )
     }
 }
 
 function AllRoute(props) {
     // console.log(props, 'AllRoute')
-    if(!props) {
+    if (!props) {
         return
     }
-    if(props.hasOwnProperty('children')) {
-        return props.children.map(item=> {
+    if (props.hasOwnProperty('children')) {
+        return props.children.map((item) => {
             return AllRoute(item)
         })
     } else {
-        return <Route
-            key={props.path}
-            exact={props.exact}
-            path={props.path}
-            render={childProp => {
-                return <props.component {...childProp} />
-            }}
-        />
+        return (
+            <Route
+                key={props.path}
+                exact={props.exact}
+                path={props.path}
+                render={(childProp) => {
+                    return <props.component {...childProp} />
+                }}
+            />
+        )
     }
 }

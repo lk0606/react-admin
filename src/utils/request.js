@@ -9,7 +9,7 @@ const timeout =
 
 // create an axios instance
 const service = axios.create({
-    baseURL: 'http://localhost:3000', // api的base_url
+    baseURL: process.env.BASE_URL, // api的base_url
     timeout, // request timeout/
     withCredentials: true,
     headers: {
