@@ -18,10 +18,10 @@ const columns = [
 ]
 
 function callback(key) {
-    console.log(key, 'tabs key')
+    // console.log(key, 'tabs key')
 }
 function getColumn(data) {
-    console.log(data, 'data')
+    // console.log(data, 'data')
     if (!data) {
         return []
     }

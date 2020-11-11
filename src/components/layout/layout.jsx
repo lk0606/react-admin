@@ -1,26 +1,13 @@
 import './layout.less'
-import React, { lazy } from 'react'
-import {
-    Route,
-    Switch as RouteSwitch,
-    Link,
-    useRouteMatch,
-    useHistory,
-    HashRouter,
-} from 'react-router-dom'
+import React from 'react'
+import { Route, Switch as RouteSwitch, Link } from 'react-router-dom'
 import { Layout as CLayout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
 } from '@ant-design/icons'
 import { Aside } from './aside'
-import MainContent from './content'
-import CInput from '../c-input/c-input'
-import CSelect from '../c-select/c-select'
-import { listData } from '../../mock/list'
 
 const { Header, Sider, Content } = CLayout
 
@@ -30,31 +17,25 @@ const menu = (
             <span>略略略</span>
         </Menu.Item>
         <Menu.Item>
-            <span>噗呲</span>
+            <span>敬请期待</span>
         </Menu.Item>
         <Menu.Item>
             <Link to="/user">注销</Link>
-            {/*<span></span>*/}
         </Menu.Item>
     </Menu>
 )
-function ChildCom(props) {
-    return <p>{props.child}</p>
-}
 
 export default class Layout extends React.Component {
-    // constructor(props) {
-    //     super(props)
-    //     console.log(props, 'props Layout')
-    // }
-
-    state = {
-        collapsed: false,
-        theme: 'dark',
-        current: '1',
-        dom: null,
-        input: '',
-        listData,
+    constructor(props) {
+        super(props)
+        // console.log(props, 'props Layout')
+        this.state = {
+            collapsed: false,
+            theme: 'dark',
+            current: '1',
+            dom: null,
+            input: '',
+        }
     }
 
     changeTheme = (value) => {
@@ -64,69 +45,14 @@ export default class Layout extends React.Component {
         })
     }
 
-    handleClick = (e) => {
-        // console.log('click ', e);
-        this.setState({
-            current: e.key,
-        })
-    }
-
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         })
     }
-    api() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(true)
-            }, 500)
-        })
-    }
-    async renderDom() {
-        try {
-            let dom = await this.api()
-            if (dom) {
-                this.setState({
-                    dom: 3,
-                })
-            }
-        } catch (e) {
-            console.log(e, 'e')
-        }
-    }
-    componentDidMount() {
-        // console.log(this, 'this')
-        this.renderDom().then((res) => {
-            // console.log(res, 'res')
-        })
-    }
-    pushView(path) {
-        console.log(path, this, 'pushView')
-        this.props.history.push(path)
-    }
-    handleInput = (data) => {
-        // console.log(data, 'handleInput parent')
-        this.setState({
-            input: data,
-        })
-    }
+    componentDidMount() {}
 
     render() {
-        const _this = this
-        function dom(type) {
-            return (
-                <div>
-                    <p>state: {type}</p>
-                    <ChildCom child={'child:' + type} />
-                </div>
-            )
-        }
-
-        function test() {
-            return dom(_this.state.dom)
-        }
-
         return (
             <CLayout className="layout-container">
                 <Sider
@@ -142,9 +68,9 @@ export default class Layout extends React.Component {
                         unCheckedChildren="Light"
                     />
                     <Aside
-                        onHandleRoute={this.pushView.bind(this)}
                         theme={this.state.theme}
                         children={this.props.children}
+                        {...this.props}
                     />
                 </Sider>
                 <CLayout className="site-layout">
@@ -182,15 +108,6 @@ export default class Layout extends React.Component {
                             // console.log(item, 'layout item')
                             return AllRoute(item)
                         })}
-
-                        {test()}
-                        <CInput
-                            myInput={this.handleInput}
-                            input={this.state.input}
-                            test="11"
-                            maxLength={10}
-                        />
-                        <CSelect />
                     </Content>
                 </CLayout>
             </CLayout>

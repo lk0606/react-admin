@@ -16,7 +16,7 @@ const form = {
     login: {
         label: '登录',
         username: 'admin',
-        password: '5456',
+        password: '123',
         remember: true,
     },
     register: {
@@ -29,6 +29,7 @@ const form = {
 
 function User(props) {
     const [activeKey, setActiveKey] = useState('login')
+    const { history } = props
 
     const handleChange = (type) => {
         setActiveKey(type)
@@ -46,6 +47,7 @@ function User(props) {
             values.password = hash
             const { message } = await getUserInfo(values)
             props.message.success(message)
+            history.push('/')
         } catch (error) {
             console.log('error :>> ', error)
         }

@@ -6,27 +6,31 @@ import {
     HashRouter,
     Route,
     Switch,
+    Redirect,
 } from 'react-router-dom'
 import { routeConfig } from './router/index'
 import store from './store'
 import { message } from 'antd'
+import Cookies from 'js-cookie'
 
 import './assets/styles/index.less'
 import * as serviceWorker from './serviceWorker'
 
+const token = Cookies.get('token')
 ReactDOM.render(
     <Provider store={store}>
         <HashRouter>
             <Switch>
-                {routeConfig.map((route, key) => {
+                {routeConfig.map((route) => {
                     return (
                         <Route
-                            key={key}
+                            key={route.path}
                             path={route.path}
                             render={(props) => {
                                 // console.log(route, 'props')
                                 return (
                                     <route.component
+                                        exact
                                         {...props}
                                         message={message}
                                         children={route.children}
@@ -37,6 +41,7 @@ ReactDOM.render(
                     )
                 })}
             </Switch>
+            {!token && <Redirect to="/user" />}
         </HashRouter>
     </Provider>,
     document.getElementById('root')

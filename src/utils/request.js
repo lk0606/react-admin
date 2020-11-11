@@ -16,12 +16,15 @@ const service = axios.create({
     baseURL, // api的base_url
     timeout, // request timeout/
     withCredentials: true,
-    headers: {
-        Authorization: `Bearer ${Cookies.get('token')}`, // 写到具体需要接口上
-        //   'Content-Type': 'application/json'
-    },
+    // headers: {
+    // Authorization: `Bearer ${Cookies.get('token')}`, // 写到具体需要接口上
+    //   'Content-Type': 'application/json'
+    // },
 })
-
+const token = Cookies.get('token')
+if (token) {
+    service.defaults.headers.Authorization = `Bearer ${token}`
+}
 // 发送请求前对请求数据进行处理
 service.defaults.transformRequest = [
     function (data) {
