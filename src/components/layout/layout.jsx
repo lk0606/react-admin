@@ -1,6 +1,6 @@
 import './layout.less'
 import React from 'react'
-import { Route, Switch as RouteSwitch, Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import { Layout as CLayout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
 import {
     MenuUnfoldOutlined,

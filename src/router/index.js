@@ -10,11 +10,11 @@ export const routeConfig = [
         },
     },
     {
-        path: '/',
+        path: '/menu/:id',
         component: require('../components/layout/layout').default,
         children: [
             {
-                path: '/goods',
+                path: 'goods',
                 component: () => <div>goods</div>,
                 meta: {
                     name: '商品列表',
@@ -22,7 +22,7 @@ export const routeConfig = [
                 },
                 children: [
                     {
-                        path: '/nav1',
+                        path: 'nav1',
                         component: () => <div>商品列表1</div>,
                         meta: {
                             name: '商品列表1',
@@ -30,7 +30,7 @@ export const routeConfig = [
                         },
                         children: [
                             {
-                                path: '/nav11',
+                                path: 'nav11',
                                 component: () => <div>商品列表11</div>,
                                 meta: {
                                     name: '商品列表11',
@@ -38,7 +38,7 @@ export const routeConfig = [
                                 },
                             },
                             {
-                                path: '/nav12',
+                                path: 'nav12',
                                 component: () => <div>商品列表12</div>,
                                 meta: {
                                     name: '商品列表12',
@@ -48,7 +48,7 @@ export const routeConfig = [
                         ],
                     },
                     {
-                        path: '/nav2',
+                        path: 'nav2',
                         component: () => <div>商品列表2</div>,
                         meta: {
                             name: '商品列表2',
@@ -58,7 +58,7 @@ export const routeConfig = [
                 ],
             },
             {
-                path: '/user-manage',
+                path: 'user-manage',
                 component: () => <div>用户管理</div>,
                 meta: {
                     name: '用户管理',

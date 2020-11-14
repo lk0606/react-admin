@@ -24,13 +24,12 @@ ReactDOM.render(
                 {routeConfig.map((route) => {
                     return (
                         <Route
+                            exact
                             key={route.path}
                             path={route.path}
                             render={(props) => {
-                                // console.log(route, 'props')
                                 return (
                                     <route.component
-                                        exact
                                         {...props}
                                         message={message}
                                         children={route.children}

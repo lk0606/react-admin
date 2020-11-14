@@ -1,25 +1,12 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
-import { Layout as CLayout, Menu, Switch, Avatar, Badge, Dropdown } from 'antd'
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-} from '@ant-design/icons'
-const { SubMenu } = Menu
+import { Link } from 'react-router-dom'
+import { Menu } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
 export function Aside(props) {
-    const { history } = props
-    console.log(props, 'Aside props')
-
+    // console.log(props, 'Aside props')
     const AsideItem = (children) => {
         // console.log('props :>> ', props)
-        const handleRoute = (route) => {
-            console.log('path', route.path)
-            return history.push(route.path)
-        }
         return children.map((item) => {
             if (item.children) {
                 return (
@@ -37,12 +24,11 @@ export function Aside(props) {
                 )
             }
             return (
-                <Menu.Item
-                    onClick={handleRoute.bind(this, item)}
-                    key={item.path}
-                >
-                    <UserOutlined />
-                    <span>{item.meta.name}</span>
+                <Menu.Item key={item.path}>
+                    <Link to={item.path}>
+                        <UserOutlined />
+                        <span>{item.meta.name}</span>
+                    </Link>
                 </Menu.Item>
             )
         })
