@@ -16,7 +16,6 @@ export const routeConfig = [
             },
             {
                 path: '/menu/goods/:id',
-                component: () => <div>goods</div>,
                 meta: {
                     name: '商品列表',
                     icon: '',
@@ -24,7 +23,6 @@ export const routeConfig = [
                 children: [
                     {
                         path: '/menu/goods/nav1/:id',
-                        component: () => <div>商品列表1</div>,
                         meta: {
                             name: '商品列表1',
                             icon: '',

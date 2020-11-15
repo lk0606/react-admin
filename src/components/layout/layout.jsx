@@ -102,7 +102,7 @@ export default class Layout extends React.Component {
                             minHeight: 280,
                         }}
                     >
-                        <RenderMenuContent children={this.props.children} />
+                        <MountRouteComp children={this.props.children} />
                     </Content>
                 </CLayout>
             </CLayout>
@@ -110,11 +110,16 @@ export default class Layout extends React.Component {
     }
 }
 
-function RenderMenuContent(props) {
+function MountRouteComp(props) {
     if (props.hasOwnProperty('children')) {
         // console.log('if :>> ', props);
         return props.children.map((item) => {
-            return RenderMenuContent(item)
+            return (
+                <Route exact={item.exact} key={item.path} path={item.path}>
+                    {MountRouteComp(item)}
+                </Route>
+                // MountRouteComp(item)
+            )
         })
     } else {
         // console.log('else :>> ', props);
@@ -124,7 +129,7 @@ function RenderMenuContent(props) {
                 key={props.path}
                 path={props.path}
                 render={(childProp) => {
-                    return <props.component {...childProp} />
+                    return props.component && <props.component {...childProp} />
                 }}
             />
         )
