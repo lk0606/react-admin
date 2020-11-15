@@ -38,7 +38,6 @@ export default class Layout extends React.Component {
     }
 
     changeTheme = (value) => {
-        // console.log(value, 'changeTheme')
         this.setState({
             theme: value ? 'dark' : 'light',
         })
