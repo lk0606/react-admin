@@ -19,7 +19,7 @@ import * as serviceWorker from './serviceWorker'
 const token = Cookies.get('token')
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
             <Switch>
                 {routeConfig.map((route) => {
                     return (
@@ -41,7 +41,7 @@ ReactDOM.render(
                 })}
             </Switch>
             {!token && <Redirect to="/user" />}
-        </BrowserRouter>
+        </HashRouter>
     </Provider>,
     document.getElementById('root')
 )
