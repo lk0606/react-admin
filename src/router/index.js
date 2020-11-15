@@ -2,17 +2,17 @@ import React from 'react'
 
 export const routeConfig = [
     {
-        path: '/user',
-        component: require('../pages/user/User').default,
-        meta: {
-            name: '登录',
-            icon: '',
-        },
-    },
-    {
         path: '/menu/:id',
         component: require('../components/layout/layout').default,
         children: [
+            {
+                path: 'welcome',
+                component: () => <div>welcome</div>,
+                meta: {
+                    name: '欢迎页',
+                    icon: '',
+                },
+            },
             {
                 path: 'goods',
                 component: () => <div>goods</div>,
@@ -66,6 +66,14 @@ export const routeConfig = [
                 },
             },
         ],
+    },
+    {
+        path: '/user',
+        component: require('../pages/user/User').default,
+        meta: {
+            name: '登录',
+            icon: '',
+        },
     },
     {
         path: '*',

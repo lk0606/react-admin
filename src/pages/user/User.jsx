@@ -47,7 +47,7 @@ function User(props) {
             values.password = hash
             const { message } = await getUserInfo(values)
             props.message.success(message)
-            history.push('/')
+            history.push('/menu/welcome')
         } catch (error) {
             console.log('error :>> ', error)
         }

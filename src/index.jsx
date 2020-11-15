@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     HashRouter,
     Route,
     Switch,
@@ -19,7 +19,7 @@ import * as serviceWorker from './serviceWorker'
 const token = Cookies.get('token')
 ReactDOM.render(
     <Provider store={store}>
-        <HashRouter>
+        <BrowserRouter>
             <Switch>
                 {routeConfig.map((route) => {
                     return (
@@ -41,7 +41,7 @@ ReactDOM.render(
                 })}
             </Switch>
             {!token && <Redirect to="/user" />}
-        </HashRouter>
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 )
