@@ -3,7 +3,7 @@ import React from 'react'
 export const routeConfig = [
     {
         path: '/menu/:id',
-        exact: true,
+        exact: false,
         component: require('../components/layout/layout').default,
         children: [
             {
