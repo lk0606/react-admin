@@ -3,10 +3,11 @@ import React from 'react'
 export const routeConfig = [
     {
         path: '/menu/:id',
+        exact: true,
         component: require('../components/layout/layout').default,
         children: [
             {
-                path: 'welcome',
+                path: '/menu/welcome',
                 component: () => <div>welcome</div>,
                 meta: {
                     name: '欢迎页',
@@ -14,7 +15,7 @@ export const routeConfig = [
                 },
             },
             {
-                path: 'goods',
+                path: '/menu/goods/:id',
                 component: () => <div>goods</div>,
                 meta: {
                     name: '商品列表',
@@ -22,7 +23,7 @@ export const routeConfig = [
                 },
                 children: [
                     {
-                        path: 'nav1',
+                        path: '/menu/goods/nav1/:id',
                         component: () => <div>商品列表1</div>,
                         meta: {
                             name: '商品列表1',
@@ -30,7 +31,7 @@ export const routeConfig = [
                         },
                         children: [
                             {
-                                path: 'nav11',
+                                path: '/menu/goods/nav1/nav11',
                                 component: () => <div>商品列表11</div>,
                                 meta: {
                                     name: '商品列表11',
@@ -38,7 +39,7 @@ export const routeConfig = [
                                 },
                             },
                             {
-                                path: 'nav12',
+                                path: '/menu/goods/nav1/nav12',
                                 component: () => <div>商品列表12</div>,
                                 meta: {
                                     name: '商品列表12',
@@ -48,7 +49,7 @@ export const routeConfig = [
                         ],
                     },
                     {
-                        path: 'nav2',
+                        path: '/menu/goods/nav2',
                         component: () => <div>商品列表2</div>,
                         meta: {
                             name: '商品列表2',
@@ -58,7 +59,7 @@ export const routeConfig = [
                 ],
             },
             {
-                path: 'user-manage',
+                path: '/menu/user-manage',
                 component: () => <div>用户管理</div>,
                 meta: {
                     name: '用户管理',

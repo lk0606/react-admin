@@ -7,7 +7,7 @@ import {
     MenuFoldOutlined,
     UserOutlined,
 } from '@ant-design/icons'
-import { Aside } from './aside'
+import Aside from './aside'
 
 const { Header, Sider, Content } = CLayout
 
@@ -28,7 +28,6 @@ const menu = (
 export default class Layout extends React.Component {
     constructor(props) {
         super(props)
-        // console.log(props, 'props Layout')
         this.state = {
             collapsed: false,
             theme: 'dark',
@@ -104,10 +103,7 @@ export default class Layout extends React.Component {
                             minHeight: 280,
                         }}
                     >
-                        {this.props.children.map((item) => {
-                            // console.log(item, 'layout item')
-                            return AllRoute(item)
-                        })}
+                        <RenderMenuContent children={this.props.children} />
                     </Content>
                 </CLayout>
             </CLayout>
@@ -115,20 +111,18 @@ export default class Layout extends React.Component {
     }
 }
 
-function AllRoute(props) {
-    // console.log(props, 'AllRoute')
-    if (!props) {
-        return
-    }
+function RenderMenuContent(props) {
     if (props.hasOwnProperty('children')) {
+        // console.log('if :>> ', props);
         return props.children.map((item) => {
-            return AllRoute(item)
+            return RenderMenuContent(item)
         })
     } else {
+        // console.log('else :>> ', props);
         return (
             <Route
-                key={props.path}
                 exact={props.exact}
+                key={props.path}
                 path={props.path}
                 render={(childProp) => {
                     return <props.component {...childProp} />

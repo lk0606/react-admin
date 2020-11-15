@@ -24,7 +24,7 @@ ReactDOM.render(
                 {routeConfig.map((route) => {
                     return (
                         <Route
-                            exact
+                            exact={route.exact}
                             key={route.path}
                             path={route.path}
                             render={(props) => {
