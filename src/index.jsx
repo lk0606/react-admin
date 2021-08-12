@@ -15,6 +15,28 @@ import Cookies from 'js-cookie'
 
 import './assets/styles/index.less'
 import * as serviceWorker from './serviceWorker'
+import { registerMicroApps, start, runAfterFirstMounted } from 'qiankun'
+
+registerMicroApps([
+    {
+        name: 'vue',
+        entry: '//vue2.wont-org.cn/',
+        container: '#subapp-container',
+        activeRule: '/vue',
+    },
+    {
+        name: 'vue3',
+        entry: '//vue3.wont-org.cn/',
+        container: '#subapp-container',
+        activeRule: '/vue3',
+    },
+])
+// 启动 qiankun
+start()
+
+runAfterFirstMounted(() => {
+    console.log('[MainApp] first app mounted')
+})
 
 const token = Cookies.get('token')
 ReactDOM.render(
@@ -41,7 +63,7 @@ ReactDOM.render(
                 })}
             </Switch>
             <Redirect to="/menu/welcome" from="/" exact />
-            {!token && <Redirect to="/user" />}
+            {/* {!token && <Redirect to="/user" />} */}
         </HashRouter>
     </Provider>,
     document.getElementById('root')

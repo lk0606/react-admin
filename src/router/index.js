@@ -15,6 +15,14 @@ export const routeConfig = [
                 },
             },
             {
+                path: '/menu/qiankun',
+                component: () => require('../pages/qiankun').default(),
+                meta: {
+                    name: 'qiankun',
+                    icon: '',
+                },
+            },
+            {
                 path: '/menu/goods/:id',
                 meta: {
                     name: '商品列表',
