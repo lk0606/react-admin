@@ -11,6 +11,7 @@ pipeline {
         build_dir = 'build'
         source_dir = '/docker_root/jenkins/workspace'
         target_dir = '/www/wwwroot'
+        CI = 'false'
     }
     stages {
         stage('Preparation') {
