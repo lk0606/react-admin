@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import {
     BrowserRouter,
-    HashRouter,
+    // HashRouter,
     Route,
     Switch,
     Redirect,
@@ -41,7 +41,7 @@ runAfterFirstMounted(() => {
 const token = Cookies.get('token')
 ReactDOM.render(
     <Provider store={store}>
-        <HashRouter>
+        <BrowserRouter>
             <Switch>
                 {routeConfig.map((route) => {
                     return (
@@ -64,7 +64,7 @@ ReactDOM.render(
             </Switch>
             <Redirect to="/menu/welcome" from="/" exact />
             {/* {!token && <Redirect to="/user" />} */}
-        </HashRouter>
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 )
