@@ -23,7 +23,7 @@
             "prettier --write"
         ]
     },
-    "homepage": ".",
+    "homepage": "/",
     "browserslist": {
         "production": [
             ">0.2%",
