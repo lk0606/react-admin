@@ -3,6 +3,7 @@ pipeline {
     options {
         disableConcurrentBuilds()
         timeout(time: 10, unit: 'MINUTES')
+        retry(1)
         timestamps()
     }
     tools { nodejs 'NodeJs_14_lts' }

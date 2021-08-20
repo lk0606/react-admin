@@ -62,7 +62,7 @@ ReactDOM.render(
                     )
                 })}
             </Switch>
-            {/* <Redirect to="/menu/welcome" from="/" exact /> */}
+            <Redirect to="/menu/welcome" from="/" exact />
             {/* {!token && <Redirect to="/user" />} */}
         </BrowserRouter>
     </Provider>,
