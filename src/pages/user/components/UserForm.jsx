@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, message as Message } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { getCaptcha } from '../../../api/common'
+import { getCaptcha, getCaptchaByEmail } from '../../../api/common'
 
 const layout = {
     labelCol: {
@@ -11,22 +11,17 @@ const layout = {
         span: 18,
     },
 }
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 18,
-    },
-}
 
-const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
+const UserForm = ({ userInfo = {}, onFinish, onFinishFailed, activeKey }) => {
     const [captchaInfo, setCaptchaInfo] = useState({
         text: '',
         data: '',
     })
+    const [form] = Form.useForm()
     const rules = (message, type = 'string', required = true) => {
         if (type === 'captcha') {
             const validator = async (rule, value) => {
-                console.log('value,  :>> ', value, captchaInfo.text)
+                // console.log('value,  :>> ', value, captchaInfo.text)
                 if (!new RegExp(`${captchaInfo.text}`, 'i').test(value)) {
                     return Promise.reject(rule.message)
                 } else {
@@ -35,6 +30,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
             }
             return [
                 {
+                    required,
                     validator,
                     message,
                 },
@@ -54,12 +50,23 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
         try {
             const { data = {} } = (await getCaptcha()) || {}
             setCaptchaInfo(data)
-            // return result
+        } catch (error) {}
+    }
+
+    const onCaptchaByEmail = async () => {
+        try {
+            const data = await form.validateFields([
+                'username',
+                'password',
+                'email',
+            ])
+            const { message } = await getCaptchaByEmail(data)
+            Message.success(message)
         } catch (error) {}
     }
 
     useEffect(() => {
-        if (activeKey === 'register') {
+        if (activeKey === 'login') {
             onCaptcha()
         }
     }, [activeKey])
@@ -68,6 +75,7 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
         <Form
             labelAlign="left"
             {...layout}
+            form={form}
             name={activeKey}
             initialValues={userInfo}
             onFinish={onFinish}
@@ -78,7 +86,10 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 name="username"
                 rules={rules('Please input your username!')}
             >
-                <Input prefix={<UserOutlined className="form-item-icon" />} />
+                <Input
+                    placeholder="Please input your username"
+                    prefix={<UserOutlined className="form-item-icon" />}
+                />
             </Form.Item>
 
             <Form.Item
@@ -87,60 +98,60 @@ const UserForm = ({ userInfo, onFinish, onFinishFailed, activeKey }) => {
                 rules={rules('Please input your password!')}
             >
                 <Input.Password
+                    placeholder="Please input your password"
                     prefix={<LockOutlined className="form-item-icon" />}
                 />
             </Form.Item>
 
-            {activeKey === 'login' ? (
+            {activeKey === 'register' && (
                 <Form.Item
-                    // {...tailLayout}
-                    name="remember"
-                    valuePropName="checked"
+                    label="Email"
+                    name="email"
+                    rules={rules('Please input correct email!', 'email')}
                 >
-                    <Checkbox>Remember me</Checkbox>
+                    <Input
+                        placeholder="input your email, to get captcha"
+                        prefix={<MailOutlined className="form-item-icon" />}
+                    />
                 </Form.Item>
-            ) : null}
-
-            {activeKey === 'register' ? (
-                <>
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={rules('Please input correct email!', 'email')}
-                    >
-                        <Input
-                            prefix={<MailOutlined className="form-item-icon" />}
-                        />
-                    </Form.Item>
-                    {captchaInfo.data ? (
-                        <Form.Item
-                            // {...tailLayout}
-                            label="Captcha"
-                            name="captcha"
-                            rules={rules(
-                                'Please input correct captcha!',
-                                'captcha'
-                            )}
-                            extra="We must make sure that your are a human."
-                        >
-                            <div className="df">
-                                <Input />
-                                <div
-                                    className="captcha-wrap"
-                                    dangerouslySetInnerHTML={{
-                                        __html: captchaInfo.data,
-                                    }}
-                                    onClick={onCaptcha}
-                                ></div>
-                            </div>
-                        </Form.Item>
-                    ) : null}
-                </>
-            ) : null}
+            )}
 
             <Form.Item
-            // {...tailLayout}
+                label="Captcha"
+                name="captcha"
+                rules={rules('Please input correct captcha!', 'captcha')}
+                extra="We must make sure that your are a human."
             >
+                <div className="df">
+                    <Input placeholder="input four code" />
+                    {activeKey === 'register' && (
+                        <Button
+                            type="primary"
+                            className="ml10"
+                            onClick={onCaptchaByEmail}
+                        >
+                            获取验证码
+                        </Button>
+                    )}
+                    {activeKey === 'login' && (
+                        <div
+                            className="ml10 captcha-wrap"
+                            dangerouslySetInnerHTML={{
+                                __html: captchaInfo.data || '验证码加载失败',
+                            }}
+                            onClick={onCaptcha}
+                        ></div>
+                    )}
+                </div>
+            </Form.Item>
+
+            {activeKey === 'login' && (
+                <Form.Item name="remember" valuePropName="checked">
+                    <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+            )}
+
+            <Form.Item>
                 <Button type="primary" htmlType="submit">
                     {activeKey}
                 </Button>

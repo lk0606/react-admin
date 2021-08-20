@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Tabs } from 'antd'
 import UserForm from './components/UserForm'
 import { connect } from 'react-redux'
+import crypto from 'crypto-js/sha1'
 import {
     addTodo,
     apiRequest,
@@ -12,30 +13,23 @@ import { getUserInfo, reg } from '../../api/user'
 import './index.less'
 
 const form = {
-    login:
-        // [
-        //     {
-        //         label: '昵称',
-        //         name: 'username',
-        //         value: 'admin',
-        //         rules: [],
-        //     },
-        // ],
-        {
-            label: '登录',
-            username: 'admin',
-            password: '123',
-            remember: true,
-        },
+    login: {
+        label: '登录',
+        username: 'admin',
+        password: '123',
+        remember: true,
+    },
     register: {
         username: '',
         password: '',
+        email: '',
         captcha: '',
     },
 }
 
 function User(props) {
     const [activeKey, setActiveKey] = useState('login')
+    const { history } = props
 
     const handleChange = (type) => {
         setActiveKey(type)
@@ -46,15 +40,24 @@ function User(props) {
     // props.sagaRequest(values)
     // };
 
-    const handleLogin = async (values) => {
+    const handleLogin = async (values = {}) => {
         try {
+            const { password = '' } = values
+            const hash = crypto(password).toString()
+            values.password = hash
             const { message } = await getUserInfo(values)
             props.message.success(message)
-        } catch (error) {}
+            history.push('/menu/welcome')
+        } catch (error) {
+            console.log('error :>> ', error)
+        }
     }
 
     const handleReg = async (values) => {
         try {
+            const { password = '' } = values
+            const hash = crypto(password).toString()
+            values.password = hash
             const { message } = await reg(values)
             props.message.success(message)
         } catch (error) {}
@@ -75,7 +78,7 @@ function User(props) {
             >
                 <Tabs.TabPane tab="登录" key="login">
                     <UserForm
-                        activeKey={activeKey}
+                        activeKey="login"
                         onFinish={handleLogin}
                         onFinishFailed={onFinishFailed}
                         userInfo={form.login}
@@ -83,10 +86,10 @@ function User(props) {
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="注册" key="register">
                     <UserForm
-                        activeKey={activeKey}
+                        activeKey="register"
                         onFinish={handleReg}
-                        onFinishFailed={onFinishFailed}
                         userInfo={form.register}
+                        onFinishFailed={onFinishFailed}
                     />
                 </Tabs.TabPane>
             </Tabs>

@@ -2,35 +2,60 @@ import React from 'react'
 
 export const routeConfig = [
     {
-        path: '/user',
-        component: require('../pages/user/User').default,
-        meta: {
-            name: '登录',
-            icon: '',
-        },
-    },
-    {
-        path: '/',
+        path: '/menu',
+        exact: false,
         component: require('../components/layout/layout').default,
         children: [
             {
-                path: '/goods',
-                component: () => <div>goods</div>,
+                path: '/menu/welcome',
+                component: () => <div>welcome</div>,
+                meta: {
+                    name: '欢迎页',
+                    icon: '',
+                },
+            },
+            {
+                path: '/menu/qiankun',
+                meta: {
+                    name: 'qiankun',
+                    icon: '',
+                    micro: true,
+                },
+                children: [
+                    {
+                        path: '/menu/qiankun/vue2',
+                        meta: {
+                            name: 'vue2项目',
+                            icon: '',
+                            // micro: true,
+                        },
+                    },
+                    {
+                        path: '/menu/qiankun/vue3',
+                        meta: {
+                            name: 'vue3项目',
+                            icon: '',
+                            // micro: true,
+                        },
+                    },
+                ],
+            },
+            {
+                path: '/menu/goods/:id',
                 meta: {
                     name: '商品列表',
                     icon: '',
                 },
                 children: [
                     {
-                        path: '/nav1',
-                        component: () => <div>商品列表1</div>,
+                        path: '/menu/goods/nav1/:id',
                         meta: {
                             name: '商品列表1',
                             icon: '',
                         },
                         children: [
                             {
-                                path: '/nav11',
+                                path: '/menu/goods/nav1/nav11',
                                 component: () => <div>商品列表11</div>,
                                 meta: {
                                     name: '商品列表11',
@@ -38,7 +63,7 @@ export const routeConfig = [
                                 },
                             },
                             {
-                                path: '/nav12',
+                                path: '/menu/goods/nav1/nav12',
                                 component: () => <div>商品列表12</div>,
                                 meta: {
                                     name: '商品列表12',
@@ -48,25 +73,17 @@ export const routeConfig = [
                         ],
                     },
                     {
-                        path: '/nav2',
+                        path: '/menu/goods/nav2',
                         component: () => <div>商品列表2</div>,
                         meta: {
                             name: '商品列表2',
                             icon: '',
                         },
                     },
-                    {
-                        path: '/table',
-                        component: require('../pages/index/index').default,
-                        meta: {
-                            name: '表格',
-                            icon: '',
-                        },
-                    },
                 ],
             },
             {
-                path: '/user-manage',
+                path: '/menu/user-manage',
                 component: () => <div>用户管理</div>,
                 meta: {
                     name: '用户管理',
@@ -76,7 +93,15 @@ export const routeConfig = [
         ],
     },
     {
-        path: '*',
+        path: '/user',
+        component: require('../pages/user/User').default,
+        meta: {
+            name: '登录',
+            icon: '',
+        },
+    },
+    {
+        path: '/:pathMatch(.*)',
         component: () => <div>404</div>,
         meta: {
             name: '404',
