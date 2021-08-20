@@ -16,11 +16,29 @@ export const routeConfig = [
             },
             {
                 path: '/menu/qiankun',
-                component: () => require('../pages/qiankun').default(),
                 meta: {
                     name: 'qiankun',
                     icon: '',
+                    micro: true,
                 },
+                children: [
+                    {
+                        path: '/menu/qiankun/vue2',
+                        meta: {
+                            name: 'vue2项目',
+                            icon: '',
+                            // micro: true,
+                        },
+                    },
+                    {
+                        path: '/menu/qiankun/vue3',
+                        meta: {
+                            name: 'vue3项目',
+                            icon: '',
+                            // micro: true,
+                        },
+                    },
+                ],
             },
             {
                 path: '/menu/goods/:id',
@@ -83,7 +101,7 @@ export const routeConfig = [
         },
     },
     {
-        path: '*',
+        path: '/:pathMatch(.*)',
         component: () => <div>404</div>,
         meta: {
             name: '404',

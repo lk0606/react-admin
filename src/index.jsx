@@ -19,16 +19,16 @@ import { registerMicroApps, start, runAfterFirstMounted } from 'qiankun'
 
 registerMicroApps([
     {
-        name: 'vue',
+        name: 'vue2',
         entry: '//vue2.wont-org.cn/',
         container: '#subapp-container',
-        activeRule: '/vue',
+        activeRule: '/menu/qiankun/vue2',
     },
     {
         name: 'vue3',
         entry: '//vue3.wont-org.cn/',
         container: '#subapp-container',
-        activeRule: '/vue3',
+        activeRule: '/menu/qiankun/vue3',
     },
 ])
 // 启动 qiankun

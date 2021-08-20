@@ -102,6 +102,7 @@ export default class Layout extends React.Component {
                             minHeight: 280,
                         }}
                     >
+                        <main id="subapp-container" />
                         <MountRouteComp children={this.props.children} />
                     </Content>
                 </CLayout>
