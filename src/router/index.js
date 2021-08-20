@@ -100,12 +100,12 @@ export const routeConfig = [
             icon: '',
         },
     },
-    {
-        path: '/:pathMatch(.*)',
-        component: () => <div>404</div>,
-        meta: {
-            name: '404',
-            icon: '',
-        },
-    },
+    // {
+    //     path: '/:pathMatch(.*)',
+    //     component: () => <div>404</div>,
+    //     meta: {
+    //         name: '404',
+    //         icon: '',
+    //     },
+    // },
 ]
