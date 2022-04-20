@@ -8,8 +8,8 @@ const timeout =
     process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
 const baseURL =
     process.env.NODE_ENV === 'development'
-        ? 'http://localhost:13000'
-        : 'http://wont-org.cn:13000'
+        ? 'http://localhost:7001'
+        : 'http://wont-org.cn:7001'
 
 // create an axios instance
 const service = axios.create({

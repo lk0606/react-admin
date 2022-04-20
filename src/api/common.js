@@ -1,17 +1,17 @@
 import request from '../utils/request'
 
-const getUrl = (str, prefix = 'common') => `${prefix}/${str}`
+const getUrl = (str, prefix = '') => `${prefix}/${str}`
 
 export function getCaptcha(params) {
     return request({
-        url: getUrl('getCaptcha'),
+        url: getUrl('captcha/getImgCaptcha'),
         method: 'get',
         params,
     })
 }
 export function getCaptchaByEmail(data) {
     return request({
-        url: getUrl('getCaptchaByEmail'),
+        url: getUrl('email/captcha'),
         method: 'post',
         data,
     })
