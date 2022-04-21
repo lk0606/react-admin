@@ -4,17 +4,14 @@ import { message } from 'antd'
 import Cookies from 'js-cookie'
 import { get } from '@wont/utils'
 
-const timeout =
-    process.env.NODE_ENV === 'development' ? 1000 * 60 * 30 : 10 * 1000
-const baseURL =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:7001'
-        : 'http://wont-org.cn:7001'
+const timeout = process.env.REACT_APP_TIMEOUT
+const baseURL = process.env.REACT_APP_BASE_URL
+console.log('process.env :>> ', process.env)
 
 // create an axios instance
 const service = axios.create({
     baseURL, // api的base_url
-    timeout, // request timeout/
+    timeout,
     withCredentials: true,
     // headers: {
     // Authorization: `Bearer ${Cookies.get('token')}`, // 写到具体需要接口上

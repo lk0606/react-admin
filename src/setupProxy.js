@@ -1,8 +1,5 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
-const baseURL =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:7001'
-        : 'http://wont-org.cn:7001'
+const baseURL = process.env.REACT_APP_BASE_URL
 module.exports = function (app) {
     // ...
     app.use(
