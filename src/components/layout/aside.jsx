@@ -4,7 +4,7 @@ import { Menu } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 
 export default function Aside(props) {
-    console.log(props, 'Aside props')
+    // console.log(props, 'Aside props')
     return (
         <Menu
             theme={props.theme}

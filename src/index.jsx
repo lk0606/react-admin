@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import {
     BrowserRouter,
-    HashRouter,
+    // HashRouter,
     Route,
     Switch,
     Redirect,
@@ -15,11 +15,33 @@ import Cookies from 'js-cookie'
 
 import './assets/styles/index.less'
 import * as serviceWorker from './serviceWorker'
+import { registerMicroApps, start, runAfterFirstMounted } from 'qiankun'
+
+registerMicroApps([
+    {
+        name: 'vue2',
+        entry: '//vue2.wont-org.cn/',
+        container: '#subapp-container',
+        activeRule: '/menu/qiankun/vue2',
+    },
+    {
+        name: 'vue3',
+        entry: '//vue3.wont-org.cn/',
+        container: '#subapp-container',
+        activeRule: '/menu/qiankun/vue3',
+    },
+])
+// 启动 qiankun
+start()
+
+runAfterFirstMounted(() => {
+    console.log('[MainApp] first app mounted')
+})
 
 const token = Cookies.get('token')
 ReactDOM.render(
     <Provider store={store}>
-        <HashRouter>
+        <BrowserRouter>
             <Switch>
                 {routeConfig.map((route) => {
                     return (
@@ -41,8 +63,8 @@ ReactDOM.render(
                 })}
             </Switch>
             <Redirect to="/menu/welcome" from="/" exact />
-            {!token && <Redirect to="/user" />}
-        </HashRouter>
+            {/* {!token && <Redirect to="/user" />} */}
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 )

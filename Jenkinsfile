@@ -3,6 +3,7 @@ pipeline {
     options {
         disableConcurrentBuilds()
         timeout(time: 10, unit: 'MINUTES')
+        retry(1)
         timestamps()
     }
     tools { nodejs 'NodeJs_14_lts' }
@@ -11,6 +12,7 @@ pipeline {
         build_dir = 'build'
         source_dir = '/docker_root/jenkins/workspace'
         target_dir = '/www/wwwroot'
+        CI = 'false'
     }
     stages {
         stage('Preparation') {
