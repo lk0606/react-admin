@@ -68,7 +68,8 @@ service.interceptors.response.use(
         // return res
     },
     (err) => {
-        const { message: errMsg = '服务器异常' } = err || {}
+        console.dir(err)
+        const { message: errMsg = '服务器异常' } = get(err, 'response.data', {})
         const { status } = get(err, 'response', {})
         if (status === 401) {
         }
